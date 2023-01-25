@@ -1,1 +1,1 @@
-# odin
+# Assignments from the Odin Project
