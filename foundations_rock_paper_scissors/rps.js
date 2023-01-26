@@ -24,33 +24,65 @@ function titleizePlayerSelection(string) {
     return titleizedSelection;
 }
 
+// consider validating player selection input to only accept items in array
+// function validatePlayerInput(playerSelection) {} // to-do
+
 // this function gets the player input.
 function getPlayerSelection() {
     let playerSelection = prompt("Please enter 'rock', 'paper', or 'scissors'");
+    // call validatePlayerInput(playerSelection)
     console.log(`Player selection: ${titleizePlayerSelection(playerSelection)}`);
     return playerSelection;
 }
 
-// I wanted to assign number values to each option, but wasn't sure how to do that and have the logic work, so hard coded for now :l
+function tie(playerSelection, computerSelection) {
+    if (computerSelection === "Rock" && playerSelection === "Rock" || 
+            computerSelection === "Paper" && playerSelection === "Paper" || 
+            computerSelection === "Scissors" && playerSelection === "Scissors") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function win(playerSelection, computerSelection) {
+    if (computerSelection === "Paper" && playerSelection === "Rock" || 
+            computerSelection === "Rock" && playerSelection === "Scissors" || 
+            computerSelection === "Scissors" && playerSelection === "Paper") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function lose(playerSelection, computerSelection) {
+    if (computerSelection === "Scissors" && playerSelection === "Rock" || 
+            computerSelection === "Rock" && playerSelection === "Paper" || 
+            computerSelection === "Paper" && playerSelection == "Scissors") {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // this function takes two params, player selection and computer selection, and it compares them to determine if it's a win, loss, or tie for the player.
 function playRound(playerSelection, computerSelection) {
     // set fixCasePlayerSelection variable to the return value of titleizePlayerSelection function
-    let fixCasePlayerSelection = titleizePlayerSelection(playerSelection);
+    let titledizedPlayerSelection = titleizePlayerSelection(playerSelection);
     
     // this logic is for if the game is a tie
-    if (computerSelection === "Rock" && fixCasePlayerSelection === "Rock" || computerSelection === "Paper" && fixCasePlayerSelection === "Paper" || computerSelection === "Scissors" && fixCasePlayerSelection === "Scissors") {
+    if (tie(titledizedPlayerSelection, computerSelection)) {
         console.log("You tie!");
         return "tie";
     }
     // this is for if the computer wins
-    else if (computerSelection === "Paper" && fixCasePlayerSelection === "Rock" || computerSelection === "Rock" && fixCasePlayerSelection === "Scissors" || computerSelection === "Scissors" && fixCasePlayerSelection === "Paper") {
-        console.log(`You lose! ${computerSelection} beats ${fixCasePlayerSelection}.`);
+    else if (win(titledizedPlayerSelection, computerSelection)) {
+        console.log(`You lose! ${computerSelection} beats ${titledizedPlayerSelection}.`);
         return "You lose";
     }
     //this is for if the player wins
-    else if (computerSelection === "Scissors" && fixCasePlayerSelection === "Rock" || computerSelection === "Rock" && fixCasePlayerSelection === "Paper" || computerSelection === "Paper" && fixCasePlayerSelection == "Scissors") {
-        console.log(`You win! ${computerSelection} does not beat ${fixCasePlayerSelection}.`);
+    else if (lose(titledizedPlayerSelection, computerSelection)) {
+        console.log(`You win! ${computerSelection} does not beat ${titledizedPlayerSelection}.`);
         return "You win!";
     }
     return 
