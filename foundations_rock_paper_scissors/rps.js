@@ -1,15 +1,18 @@
 // Assignment from the Odin Project. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
 
-// sets the choice for the computer
 function getComputerChoice() {
     // setting a variable to an array for the three values the computer can pick, "rock", "paper", or "scissors"
     let rps = ["Rock", "Paper", "Scissors"];
-    // setting a variable called random which is set to a random option from the array above
-    let random = rps[Math.floor(Math.random() * rps.length)];
-    // prints the computer selection to the console
-    console.log(`Computer Selection: ${random}`);
-    // returns `random` var for the function
-    return random;
+    // rpsRandomIndexWithDecimal variable is the result of `Math.random()` times the length of the array. This returns a value between 0 & 1
+    let rpsRandomIndexWithDecimal = (Math.random() * rps.length);
+    // rpsRandomIndex rounds down the rpsRandomIndexWithDecimal value to get a whole number
+    let rpsRandomIndex = Math.floor(rpsRandomIndexWithDecimal);
+    // this sets the randomPlay variable to the _index_ value in the rps array. so it could be rps[0], rps[1], or rps[2]
+    let randomPlay = rps[rpsRandomIndex];
+    // prints the selection in console.log
+    console.log(`Computer Selection: ${randomPlay}`);
+    // returns randomPlay to the function
+    return randomPlay;
 }
 
 // this function takes the player input and titleizes it.
