@@ -1,17 +1,20 @@
 // Assignment from the Odin Project. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
 
+function randomIndex(choiceArray) {
+    // randomIndexWithDecimal variable is the result of `Math.random()` times the length of the array. This returns a value between 0 & 1
+    let randomIndexWithDecimal = (Math.random() * choiceArray.length);
+    // randomIndex rounds down the rpsRandomIndexWithDecimal value to get a whole number
+    // and returns a randomIndex to the function
+    return Math.floor(randomIndexWithDecimal);
+}
+
 function getComputerChoice() {
-    // setting a variable to an array for the three values the computer can pick, "rock", "paper", or "scissors"
+    // setting a variable to an array for the three values the computer can pick, "Rock", "Paper", or "Scissors"
     let rps = ["Rock", "Paper", "Scissors"];
-    // rpsRandomIndexWithDecimal variable is the result of `Math.random()` times the length of the array. This returns a value between 0 & 1
-    let rpsRandomIndexWithDecimal = (Math.random() * rps.length);
-    // rpsRandomIndex rounds down the rpsRandomIndexWithDecimal value to get a whole number
-    let rpsRandomIndex = Math.floor(rpsRandomIndexWithDecimal);
-    // this sets the randomPlay variable to the _index_ value in the rps array. so it could be rps[0], rps[1], or rps[2]
-    let randomPlay = rps[rpsRandomIndex];
+    let randomPlay = rps[randomIndex(rps)];
     // prints the selection in console.log
     console.log(`Computer Selection: ${randomPlay}`);
-    // returns randomPlay to the function
+    // returns randomPlay to the function (example: "Scissors")
     return randomPlay;
 }
 
