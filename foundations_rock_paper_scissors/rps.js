@@ -14,9 +14,6 @@ function getComputerChoice() {
     // setting a variable to an array for the three values the computer can pick, "Rock", "Paper", or "Scissors"
     let rps = ["Rock", "Paper", "Scissors"];
     let randomPlay = rps[randomIndex(rps)];
-    // prints the selection in console.log
-//    console.log(`Computer Selection: ${randomPlay}`);
-    // returns randomPlay to the function (example: "Scissors")
     return randomPlay;
 }
 
@@ -51,70 +48,47 @@ function lose(playerSelection, computerSelection) {
     }
 }
 
-// this function is the actual game
-function game() {
-    // set playerScore & computerScore as initial 0 value variables, meant to calculate score.
-    let computerScore = 0;
-    let playerScore = 0;
+let playerScore = 0;
+let computerScore = 0;
 
-    // COMMENTING THIS OUT FOR THE REVISITING RPS EXERCISE // 
-    // LINK HERE: https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors //
-    // // start for loop for 5 rounds of games
-    // for (let i = 0; i < 5; i++) {
-    //     // set playRoundResult variable to the return value from the playRound function
-    //     let playRoundResult = playRound(getPlayerSelection(), getComputerChoice());
-    //     // start switch statement and the expression is the result from the playRound function
-    //     switch (playRoundResult) {
-    //         // if the result is a "tie" string, then print it's a tie and don't do anything
-    //         case "tie":
-    //             console.log("Tied. Do nothing.");
-    //             break;
-    //         // if the playRoundResult is "You lose"
-    //         case "You lose":
-    //             // increment computerScore by 1
-    //             computerScore += 1;
-    //             // print You lost.
-    //             console.log("You lost.");
-    //             break;       
-    //         // if the playRoundResult is "You win!"             
-    //         case "You win!":
-    //             // increment playerScore by 1
-    //             playerScore += 1;
-    //             console.log("You win!");
-    //             break;            
-    //         default:
-    //             break;
-    //     }
-    // }
-    // calculate the winner of all rounds. if the computerScore is greater than playerScore, computer won.
-    if (computerScore > playerScore) {
-        console.log("Computer won.");
+function game(playerSelection, computerChoice) {
+    let playRoundResult = playRound(playerSelection, computerChoice);
+    if (playerScore < 5) {
+      if (playRoundResult === "tie") {
+        console.log(`you tied`);
+      }
+      else if (playRoundResult === "You lose") {
+        computerScore += 1;
+        console.log(`comp score: ${computerScore}`);
+        console.log(`player score: ${playerScore}`);
+        console.log(`You lost.`);
+      }
+      else if (playRoundResult === "You win") {
+        playerScore +=1;
+        console.log(`comp score: ${computerScore}`);
+        console.log(`player score: ${playerScore}`);
+        console.log(`You win!`);
+      }
+      // else {
+      //   break;
+      // }
     }
-    // else if the playerScore is greater than the computerScore, the player wins.
-    else if (playerScore > computerScore) {
-        console.log("Player won");
-    }
-    // else just print tied.
-    else {
-        console.log("Tied!");
-    }
+//    break;
+    return playRoundResult;
 }
 
-function playRound(playerSelection) {
+function playRound(playerSelection, computerChoice) {
     let playerChoice = playerSelection;
-    let computerSelection = getComputerChoice();
-//    console.log(playerChoice);
-
-    if(tie(playerChoice, computerSelection)) {
+    if(tie(playerChoice, computerChoice)) {
         console.log("You tie!");
         return "tie";
     }
-    else if (win(playerChoice, computerSelection)) {
-        console.log(`You lose! ${computerSelection} beats ${playerChoice}`);
+    else if (win(playerChoice, computerChoice)) {
+        console.log(`You lose! ${computerChoice} beats ${playerChoice}`);
         return "You lose";
     }
-    else if (lose(playerChoice, computerSelection)) {
-        console.log(`You win! ${computerSelection} does not beat ${playerChoice}`);
+    else if (lose(playerChoice, computerChoice)) {
+        console.log(`You win! ${computerChoice} does not beat ${playerChoice}`);
         return "You win"
     }
     return
@@ -124,12 +98,13 @@ function playRound(playerSelection) {
 const displayResults = document.querySelector('#displayResult');
 const playerPick = document.querySelector('#playerChoice');
 const computerPick = document.querySelector('#computerChoice');
+const displayScore = document.querySelector('#displayScore');
 
-const results = document.createElement('div');
+const gameResults = document.createElement('div');
 displayResults.appendChild(playerPick);
 displayResults.appendChild(computerPick);
-displayResults.appendChild(results);
-
+displayResults.appendChild(gameResults);
+displayResults.appendChild(displayScore);
 
 // rock paper scissors revisited //
 const buttons = document.querySelectorAll('button');
@@ -137,10 +112,13 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
         button.addEventListener('click', function(event) {
             let playerSelection = button.id;
-            let game = playRound(playerSelection);
+            let computerChoice = getComputerChoice();
+            let theGame = game(playerSelection, computerChoice);
             playerPick.textContent = `The player picked: ${playerSelection}`;
-            results.textContent = `The result is: ${game}`;
+            computerPick.textContent = `The comp picked: ${computerChoice}`;
+            gameResults.textContent = `The result is: ${theGame}`;
+            displayScore.textContent = `Computer: ${computerScore}, You: ${playerScore}`;
         });
     });
 // invoke function
-game();
+//game();
