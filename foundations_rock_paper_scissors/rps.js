@@ -1,6 +1,10 @@
-
-
 // Assignment from the Odin Project. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
+
+// https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors#assignment
+
+// global variables
+let playerScore = 0;
+let computerScore = 0;
 
 function randomIndex(choiceArray) {
     // randomIndexWithDecimal variable is the result of `Math.random()` times the length of the array. This returns a value between 0 & 1
@@ -13,8 +17,8 @@ function randomIndex(choiceArray) {
 function getComputerChoice() {
     // setting a variable to an array for the three values the computer can pick, "Rock", "Paper", or "Scissors"
     let rps = ["Rock", "Paper", "Scissors"];
-    let randomPlay = rps[randomIndex(rps)];
-    return randomPlay;
+    return rps[randomIndex(rps)];
+//    return randomPlay;
 }
 
 
@@ -48,51 +52,45 @@ function lose(playerSelection, computerSelection) {
     }
 }
 
-let playerScore = 0;
-let computerScore = 0;
-
 function game(playerSelection, computerChoice) {
-    let playRoundResult = playRound(playerSelection, computerChoice);
-    if (playerScore < 5) {
-      if (playRoundResult === "tie") {
-        console.log(`you tied`);
+  let playRoundResult = '';
+    if (playerScore == 5 || computerScore == 5){
+//      console.log(`in the first if`);
+      if (playerScore > computerScore) {
+//        console.log(`final winner is: you.`);
+        return "You are the final winner!";
       }
-      else if (playRoundResult === "You lose") {
-        computerScore += 1;
-        console.log(`comp score: ${computerScore}`);
-        console.log(`player score: ${playerScore}`);
-        console.log(`You lost.`);
+      else {
+//        console.log(`computer is the final winner`);
+        return "Computer is the final winner!";
       }
-      else if (playRoundResult === "You win") {
-        playerScore +=1;
-        console.log(`comp score: ${computerScore}`);
-        console.log(`player score: ${playerScore}`);
-        console.log(`You win!`);
-      }
-      // else {
-      //   break;
-      // }
     }
-//    break;
+    else {
+      playRoundResult = playRound(playerSelection, computerChoice);
+      if (playRoundResult === "This round is a tie") {
+      }
+      else if (playRoundResult === "You lose this round") {
+        computerScore += 1;
+      }
+      else if (playRoundResult === "You win this round") {
+        playerScore +=1;
+      }
+    }
     return playRoundResult;
 }
 
 function playRound(playerSelection, computerChoice) {
     let playerChoice = playerSelection;
     if(tie(playerChoice, computerChoice)) {
-        console.log("You tie!");
-        return "tie";
+        return "This round is a tie";
     }
     else if (win(playerChoice, computerChoice)) {
-        console.log(`You lose! ${computerChoice} beats ${playerChoice}`);
-        return "You lose";
+        return "You lose this round";
     }
     else if (lose(playerChoice, computerChoice)) {
-        console.log(`You win! ${computerChoice} does not beat ${playerChoice}`);
-        return "You win"
+        return "You win this round"
     }
     return
-    // console.log(computerSelection);
 }
 
 const displayResults = document.querySelector('#displayResult');
@@ -101,10 +99,7 @@ const computerPick = document.querySelector('#computerChoice');
 const displayScore = document.querySelector('#displayScore');
 
 const gameResults = document.createElement('div');
-displayResults.appendChild(playerPick);
-displayResults.appendChild(computerPick);
 displayResults.appendChild(gameResults);
-displayResults.appendChild(displayScore);
 
 // rock paper scissors revisited //
 const buttons = document.querySelectorAll('button');
@@ -116,9 +111,8 @@ buttons.forEach((button) => {
             let theGame = game(playerSelection, computerChoice);
             playerPick.textContent = `The player picked: ${playerSelection}`;
             computerPick.textContent = `The comp picked: ${computerChoice}`;
-            gameResults.textContent = `The result is: ${theGame}`;
+            gameResults.textContent = `${theGame}`;
             displayScore.textContent = `Computer: ${computerScore}, You: ${playerScore}`;
         });
     });
-// invoke function
-//game();
+
