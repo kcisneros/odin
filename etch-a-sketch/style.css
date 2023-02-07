@@ -2,8 +2,14 @@ body {
   background-color: aquamarine;
 }
 
+:root {
+  --user-input: 1;
+}
+
 #containerGrid {
   display: grid;
-  grid-template-columns: auto;
+  /* grid-template-columns: auto; */
+  grid-template-columns: repeat(--user-input, 18px);
   grid-template-rows: auto;
+  margin-left: 60px;
 }
