@@ -8,8 +8,5 @@ body {
 
 #containerGrid {
   display: grid;
-  /* grid-template-columns: auto; */
-  grid-template-columns: repeat(--user-input, 18px);
-  grid-template-rows: auto;
-  margin-left: 60px;
+  grid-template-columns: repeat(var(--user-input), 18px);
 }

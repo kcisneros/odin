@@ -1,80 +1,42 @@
 // assignment: https://www.theodinproject.com/lessons/foundations-etch-a-sketch
 
 const container = document.querySelector('#containerGrid');
-
-// trying to create a looping function to create squares
-// function doubleSquare(num) {
-//   for (e = 0; e < (num * num); e++ ) {
-//     // console.log(e);
-//     let gridElement = document.createElement('div');
-//     gridElement.setAttribute("class", "singleGridElement");
-//     gridElement.style.outline = 'solid';
-//     gridElement.style.height = '1em';
-//     gridElement.style.width = '1em';
-//     container.appendChild(gridElement);
-
-//     gridElement.addEventListener("mouseover", function(event) {
-//       gridElement.style.backgroundColor = 'black';
-//     });
-//   };
-// };
 let root = document.querySelector(':root');
 
-let gridSize = prompt("Please enter a number of squares per side for a new grid: ");
-console.log(`user entered the number: ${gridSize}`);
+let gridSize = 0;
 
-root.style.setProperty('--user-input', gridSize);
+do {
+  gridSize = prompt("Please enter a number between 1 and 100");
+  console.log(`in the if, gridsize is: ${gridSize}`);
+}
+while (gridSize > 100 || gridSize <= 0);
+
+console.log(`before the while, the gridsize is: ${gridSize}`);
 
 function doubleSquare(num) {
-  for (i = 0; i < (num * num); i++) {
-    console.log(`i is: ${i}`);
-    console.log(`num is: ${num}`);
+  root.style.setProperty('--user-input', gridSize);
+
+  console.log(`in the function, gridsize is: ${gridSize}`);
+
+  for (i = 0; i < gridSize; i++) {
     let gridElement = document.createElement('div');
     gridElement.setAttribute("class", "singleGridElement");
-    gridElement.style.outline = 'solid';
-    gridElement.style.height = '1em';
-    gridElement.style.width = '1em';
     container.appendChild(gridElement);
 
-    gridElement.addEventListener("mouseover", function(event) {
-      gridElement.style.backgroundColor = 'black';
-    });
-    // container.textContent = "\n";
 
-    for (j = 0; j < (num * num); j++) {
-      console.log(`j is: ${j}`);
-      let gridElement = document.createElement('div');
-      gridElement.setAttribute("class", "singleGridElement");
-      gridElement.style.outline = 'solid';
-      gridElement.style.height = '1em';
-      gridElement.style.width = '1em';
-      container.appendChild(gridElement);
+    for (j = 0; j < gridSize -1; j++) {    
+      let square = document.createElement('div');
+      square.setAttribute("class", "individualSquare");
+      square.style.outline = 'solid';
+      square.style.height = '1em';
+      square.style.width = '1em';
+      gridElement.appendChild(square);
 
-      gridElement.addEventListener("mouseover", function(event) {
-        gridElement.style.backgroundColor = 'black';
+      square.addEventListener("mouseover", function(event) {
+        square.style.backgroundColor = 'black';
       });
-    };
+    }
+  }
+}
 
-  };
-};
-
-doubleSquare(2);
-
-
-// nested for.. something like this?
-
-
-// for (i = 0; i < e; i++) {
-//   console.log(`this is i: ${i}`);
-//   console.log(`this is e: ${e}`);
-//   let gridElement = document.createElement('div');
-//   gridElement.setAttribute("class", "singleGridElement");
-//   gridElement.style.outline = 'solid';
-//   gridElement.style.height = '1em';
-//   gridElement.style.width = '1em';
-//   container.appendChild(gridElement);
-
-//   gridElement.addEventListener("mouseover", function(event) {
-//     gridElement.style.backgroundColor = 'black';
-//   });  
-// }
+doubleSquare();
