@@ -5,6 +5,26 @@
 
 // let answer = 0;
 
+
+// function getFirstNumber, getSecondNumber, and getOperator are to see how it would work in
+// the web browser console
+function getFirstNumber() {
+  let firstNum = prompt("Please enter first number");
+  firstNum = Number(firstNum);
+  return firstNum;
+}
+
+function getSecondNumber() {
+  let secondNum = prompt("Please enter second number");
+  secondNum = Number(secondNum);
+  return secondNum;
+}
+
+function getOperator() {
+  let arithmeticOperator = prompt("Please enter an operator for these two numbers. Ex: +, -, /, *");
+  return arithmeticOperator;
+}
+ 
 function add(firstNum, secondNum) {
   answer = firstNum + secondNum;
   console.log(answer);
@@ -31,7 +51,7 @@ function divide(firstNum, secondNum) {
 
 // create a new function `operate` that takes an operator and 2 nums
 // then calls one of the above functions on the numbers
-function operate(operator, firstNum, secondNum) {
+function operate(firstNum, operator, secondNum) {
   if (operator === "*") {
     multiply(firstNum, secondNum);
   }
@@ -60,3 +80,7 @@ function operate(operator, firstNum, secondNum) {
 // operate("/", 10, 5);
 // operate("*", 1, 5);
 // operate("-", 1, 5);
+
+// testing the operate function with functions as parameters
+// getting the user input for first number, operator, and second number.
+operate(getFirstNumber(), getOperator(), getSecondNumber());
