@@ -5,3 +5,20 @@
   border-style: dotted;
   white-space: nowrap;
 } */
+
+.calculator-container {
+  align-items: center;
+  height: 140px;
+  padding: 10px;
+  background-color: plum;
+  display: flex;
+}
+
+.numberButtons {
+  width: 60px;
+  height: 60px;
+  border: 4px solid gray;
+  background: skyblue;
+  align-items: center;
+  /* flex-direction: column; */
+}
