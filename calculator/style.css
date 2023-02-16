@@ -1,14 +1,6 @@
-/* #container {
+.calculatorContainer {
   align-items: center;
-  margin: auto;
-  width: 50px;
-  border-style: dotted;
-  white-space: nowrap;
-} */
-
-.calculator-container {
-  align-items: center;
-  height: 140px;
+  height: 240px;
   padding: 10px;
   background-color: plum;
   display: flex;
@@ -22,4 +14,15 @@
   border: 4px solid gray;
   background: skyblue;
   align-items: center;
+}
+
+.calculatorDisplay {
+  background-color: darkgray;
+  width: 400px;
+  height: 50px;
+  text-align: right;
+}
+
+.arithmeticOperators {
+  background-color: goldenrod;
 }
