@@ -40,6 +40,7 @@ function numButtons() {
     alert(`You pressed button number ${numberButtons.textContent}`);
     buttonPressed = numberButtons.textContent;
     console.log(`in the num buttons function. the button pressed was: ${buttonPressed}`);
+    passToDisplay(buttonPressed);
     return buttonPressed;
   });
   };
@@ -48,15 +49,19 @@ function numButtons() {
   // return buttonPressed;
 };
 
-function passToDisplay(numButtons) {
+const calcDisplay = document.createElement('div');
+calcDisplay.classList.add('calculatorDisplay');
+calcContainer.appendChild(calcDisplay);
+
+function passToDisplay() {
 
   // this doesn't work..
   // // create display that shows number pressed
-  const calcDisplay = document.createElement('div');
-  calcDisplay.classList.add('calculatorDisplay')
-  calcDisplay.textContent = `the button that was pressed is:  `;
-  calcContainer.appendChild(calcDisplay);
-  console.log(`in the pass to display function.. the num button passed is: ${numButtons()}`);
+  // const calcDisplay = document.createElement('div');
+  // calcDisplay.classList.add('calculatorDisplay')
+  calcDisplay.textContent = `${buttonPressed}`;
+  // calcContainer.appendChild(calcDisplay);
+  console.log(`in the pass to display function.. the num button passed is: ${buttonPressed}`);
 }
 
 function arithmeticButtons() {
@@ -94,6 +99,22 @@ function arithmeticButtons() {
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
     alert(`You pressed the ${multiplicationSymbol.textContent} button`);
+  });
+
+  const equalSymbol = document.createElement('button');
+  equalSymbol.classList.add('arithmeticOperators');
+  equalSymbol.textContent = "=";
+  calcContainer.appendChild(equalSymbol);
+  equalSymbol.addEventListener('click', () => {
+    alert(`You pressed the ${equalSymbol.textContent} button`);
+  });
+
+  const clearSymbol = document.createElement('button');
+  clearSymbol.classList.add('arithmeticOperators');
+  clearSymbol.textContent = 'Clear';
+  calcContainer.appendChild(clearSymbol);
+  clearSymbol.addEventListener('click', () => {
+    alert(`You pressed the ${clearSymbol.textContent} button`);
   });
 }
 
@@ -211,6 +232,6 @@ function operate(firstNum, operator, secondNum) {
 // testing the operate function with functions as parameters
 // getting the user input for first number, operator, and second number.
 // operate(getFirstNumber(), getOperator(), getSecondNumber());
-// numButtons();
-passToDisplay(numButtons);
+numButtons();
+// passToDisplay(numButtons);
 arithmeticButtons();
