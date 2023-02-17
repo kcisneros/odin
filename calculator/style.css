@@ -1,17 +1,22 @@
+h1 {
+  text-align: center;
+}
+
 .calculatorContainer {
   align-items: center;
   height: 100%vh;
   padding: 10px;
-  background-color: plum;
+  background-color: black;
   display: flex;
   width: 300px;
   flex-wrap: wrap;
+  margin: auto;
 } 
 
 .numberButtons {
   width: 60px;
   height: 60px;
-  border: 4px solid gray;
+  /* border: 4px solid gray; */
   background: skyblue;
   align-items: center;
 }
