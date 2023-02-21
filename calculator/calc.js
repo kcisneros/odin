@@ -1,11 +1,22 @@
 // assignment: https://www.theodinproject.com/lessons/foundations-calculator
 
-// let answer = 0;
+let answer = 0;
 
 const calcContainer = document.querySelector(".calculatorContainer");
 
 let buttonPressed = '';
 let displayValue = '';
+let addOperatorButton = '';
+let subtractOperatorButton = '';
+let multiplyOperatorButton = '';
+let divideOperatorButton = '';
+let equalSymbolButton = ''
+
+let finalOperandValue = '';
+
+const calcDisplay = document.createElement('div');
+calcDisplay.classList.add('calculatorDisplay');
+calcContainer.appendChild(calcDisplay);
 
 function numButtons() {
   for (i = 0; i < 10; i++) {
@@ -16,19 +27,16 @@ function numButtons() {
   numberButtons.addEventListener('click', () => {
     // alert(`You pressed button number ${numberButtons.textContent}`);
     buttonPressed = numberButtons.textContent;
-    console.log(`in the num buttons function. the button pressed was: ${buttonPressed}`);
-    passToDisplay(buttonPressed);
-    return buttonPressed;
+    finalOperandValue += buttonPressed;
+    console.log(`in the num buttons function. the button pressed was: ${finalOperandValue}`);
+    passToDisplay(finalOperandValue);
+    return finalOperandValue;
   });
   };
 };
 
-const calcDisplay = document.createElement('div');
-calcDisplay.classList.add('calculatorDisplay');
-calcContainer.appendChild(calcDisplay);
-
 function passToDisplay() {
-  displayValue = calcDisplay.textContent = `${buttonPressed}`;
+  displayValue = calcDisplay.textContent = `${finalOperandValue}`;
   console.log(`display value is: ${displayValue}`);
   return displayValue;
 }
@@ -36,42 +44,47 @@ function passToDisplay() {
 function arithmeticButtons() {
   const addSymbol = document.createElement('button');
   addSymbol.classList.add('arithmeticOperators');
-  addSymbol.textContent = "+";
+  addOperatorButton = addSymbol.textContent = "+";
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${addSymbol.textContent} button`);
+    alert(`You pressed the ${addOperatorButton} button`);
+    return addOperatorButton;
   });
 
   const minusSymbol = document.createElement('button');
   minusSymbol.classList.add('arithmeticOperators');
-  minusSymbol.textContent = "-";
+  subtractOperatorButton = minusSymbol.textContent = "-";
   calcContainer.appendChild(minusSymbol);
   minusSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${minusSymbol.textContent} button`);
+    alert(`You pressed the ${subtractOperatorButton} button`);
+    return subtractOperatorButton;
   });
 
   const divisionSymbol = document.createElement('button');
   divisionSymbol.classList.add('arithmeticOperators');
-  divisionSymbol.textContent = "/";
+  divideOperatorButton = divisionSymbol.textContent = "/";
   calcContainer.appendChild(divisionSymbol);
   divisionSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${divisionSymbol.textContent} button`);
+    alert(`You pressed the ${divideOperatorButton} button`);
+    return divideOperatorButton;
   });
 
   const multiplicationSymbol = document.createElement('button');
   multiplicationSymbol.classList.add('arithmeticOperators');
-  multiplicationSymbol.textContent = "*";
+  multiplyOperatorButton = multiplicationSymbol.textContent = "*";
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${multiplicationSymbol.textContent} button`);
+    alert(`You pressed the ${multiplyOperatorButton} button`);
+    return multiplyOperatorButton;
   });
 
   const equalSymbol = document.createElement('button');
   equalSymbol.classList.add('arithmeticOperators');
-  equalSymbol.textContent = "=";
+  equalSymbolButton = equalSymbol.textContent = "=";
   calcContainer.appendChild(equalSymbol);
   equalSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${equalSymbol.textContent} button`);
+    alert(`You pressed the ${equalSymbolButton} button`);
+    return equalSymbolButton;
   });
 
   const clearSymbol = document.createElement('button');
@@ -93,6 +106,25 @@ function arithmeticButtons() {
 //   firstNum = Number(firstNum);
 //   return firstNum;
 // }
+
+function getFirstNumber() {
+  let firstNum = finalOperandValue;
+  firstNum = Number(firstNum);
+  console.log(`in getfirstNumber function, the number is: ${firstNum}`);
+  return firstNum;
+}
+
+function getSecondNumber() {
+  let secondNum = finalOperandValue;
+  secondNum = Number(secondNum);
+  console.log(`in getSecondNumber function, the number is: ${secondNum}`);
+  return secondNum;
+}
+
+function getOperator() {
+  let arithmeticOperator = arithmeticButtons;
+  return arithmeticOperator;
+}
 
 // function getSecondNumber() {
 //   let secondNum = prompt("Please enter second number");
@@ -131,18 +163,21 @@ function divide(firstNum, secondNum) {
 
 // create a new function `operate` that takes an operator and 2 nums
 // then calls one of the above functions on the numbers
-function operate(firstNum, operator, secondNum) {
-  if (operator === "*") {
-    multiply(firstNum, secondNum);
+function operate(getFirstNumber, getOperator, getSecondNumber) {
+  numButtons();
+  passToDisplay(numButtons);
+  arithmeticButtons();
+  if (getOperator === "*") {
+    multiply(getFirstNumber, getSecondNumber);
   }
-  else if (operator === "/") {
-    divide(firstNum, secondNum);
+  else if (getOperator === "/") {
+    divide(getFirstNumber, getSecondNumber);
   }
-  else if (operator === "+") {
-    add(firstNum, secondNum);
+  else if (getOperator === "+") {
+    add(getFirstNumber, getSecondNumber);
   }
-  else if (operator === "-") {
-    subtract(firstNum, secondNum);
+  else if (getOperator === "-") {
+    subtract(getFirstNumber, getSecondNumber);
   }
   else {
     console.log("invalid operator. please enter arithmetic operator");
@@ -152,6 +187,8 @@ function operate(firstNum, operator, secondNum) {
 // testing the operate function with functions as parameters
 // getting the user input for first number, operator, and second number.
 // operate(getFirstNumber(), getOperator(), getSecondNumber());
-numButtons();
-// passToDisplay(numButtons);
-arithmeticButtons();
+// numButtons();
+// // passToDisplay(numButtons);
+// arithmeticButtons();
+// getFirstNumber();
+operate();
