@@ -47,7 +47,8 @@ function arithmeticButtons() {
   addOperatorButton = addSymbol.textContent = "+";
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${addOperatorButton} button`);
+    addOperatorButton = addOperatorButton;
+    console.log(`the add operator button is: ${addOperatorButton}`)
     return addOperatorButton;
   });
 
@@ -56,7 +57,8 @@ function arithmeticButtons() {
   subtractOperatorButton = minusSymbol.textContent = "-";
   calcContainer.appendChild(minusSymbol);
   minusSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${subtractOperatorButton} button`);
+    subtractOperatorButton = subtractOperatorButton;
+    console.log(`the subtract operator button is: ${subtractOperatorButton}`)
     return subtractOperatorButton;
   });
 
@@ -65,7 +67,8 @@ function arithmeticButtons() {
   divideOperatorButton = divisionSymbol.textContent = "/";
   calcContainer.appendChild(divisionSymbol);
   divisionSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${divideOperatorButton} button`);
+    divideOperatorButton = divideOperatorButton;
+    console.log(`the divide operator button is: ${divideOperatorButton}`)
     return divideOperatorButton;
   });
 
@@ -74,7 +77,8 @@ function arithmeticButtons() {
   multiplyOperatorButton = multiplicationSymbol.textContent = "*";
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${multiplyOperatorButton} button`);
+    multiplyOperatorButton = multiplyOperatorButton;
+    console.log(`the multiply operator button is: ${multiplyOperatorButton}`)
     return multiplyOperatorButton;
   });
 
@@ -83,7 +87,8 @@ function arithmeticButtons() {
   equalSymbolButton = equalSymbol.textContent = "=";
   calcContainer.appendChild(equalSymbol);
   equalSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${equalSymbolButton} button`);
+    equalSymbolButton = equalSymbolButton;
+    console.log(`the equal operator button is: ${equalSymbolButton}`)
     return equalSymbolButton;
   });
 
@@ -92,7 +97,9 @@ function arithmeticButtons() {
   clearSymbol.textContent = 'Clear';
   calcContainer.appendChild(clearSymbol);
   clearSymbol.addEventListener('click', () => {
-    alert(`You pressed the ${clearSymbol.textContent} button`);
+    displayValue = calcDisplay.innerHTML = '';
+    finalOperandValue = '';
+    console.log(`the clear operator button is: ${clearSymbol.textContent}`)
   });
 }
 
