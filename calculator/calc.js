@@ -1,6 +1,6 @@
 // assignment: https://www.theodinproject.com/lessons/foundations-calculator
 
-let answer = 0;
+let answer ='';
 
 const calcContainer = document.querySelector(".calculatorContainer");
 
@@ -25,7 +25,6 @@ function numButtons() {
   numberButtons.textContent = `${i}`; 
   calcContainer.appendChild(numberButtons);
   numberButtons.addEventListener('click', () => {
-    // alert(`You pressed button number ${numberButtons.textContent}`);
     buttonPressed = numberButtons.textContent;
     finalOperandValue += buttonPressed;
     console.log(`in the num buttons function. the button pressed was: ${finalOperandValue}`);
@@ -48,7 +47,7 @@ function arithmeticButtons() {
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
     addOperatorButton = addOperatorButton;
-    console.log(`the add operator button is: ${addOperatorButton}`)
+    console.log(`the add operator button is: ${addOperatorButton}`);
     return addOperatorButton;
   });
 
@@ -58,7 +57,7 @@ function arithmeticButtons() {
   calcContainer.appendChild(minusSymbol);
   minusSymbol.addEventListener('click', () => {
     subtractOperatorButton = subtractOperatorButton;
-    console.log(`the subtract operator button is: ${subtractOperatorButton}`)
+    console.log(`the subtract operator button is: ${subtractOperatorButton}`);
     return subtractOperatorButton;
   });
 
@@ -68,7 +67,7 @@ function arithmeticButtons() {
   calcContainer.appendChild(divisionSymbol);
   divisionSymbol.addEventListener('click', () => {
     divideOperatorButton = divideOperatorButton;
-    console.log(`the divide operator button is: ${divideOperatorButton}`)
+    console.log(`the divide operator button is: ${divideOperatorButton}`);
     return divideOperatorButton;
   });
 
@@ -78,41 +77,35 @@ function arithmeticButtons() {
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
     multiplyOperatorButton = multiplyOperatorButton;
-    console.log(`the multiply operator button is: ${multiplyOperatorButton}`)
+    console.log(`the multiply operator button is: ${multiplyOperatorButton}`);
     return multiplyOperatorButton;
   });
+}
 
+function equalButton() {
   const equalSymbol = document.createElement('button');
   equalSymbol.classList.add('arithmeticOperators');
   equalSymbolButton = equalSymbol.textContent = "=";
   calcContainer.appendChild(equalSymbol);
   equalSymbol.addEventListener('click', () => {
     equalSymbolButton = equalSymbolButton;
-    console.log(`the equal operator button is: ${equalSymbolButton}`)
+    console.log(`the equal operator button is: ${equalSymbolButton}`);
     return equalSymbolButton;
   });
+}
 
+function clearButton() {
   const clearSymbol = document.createElement('button');
   clearSymbol.classList.add('arithmeticOperators');
   clearSymbol.textContent = 'Clear';
   calcContainer.appendChild(clearSymbol);
   clearSymbol.addEventListener('click', () => {
-    displayValue = calcDisplay.innerHTML = '';
+    displayValue = calcDisplay.innerHTML = 0;
     finalOperandValue = '';
-    console.log(`the clear operator button is: ${clearSymbol.textContent}`)
+    console.log(`the clear operator button is: ${clearSymbol.textContent}`);
+    console.log(`the displayValue is: ${displayValue}`)
   });
 }
-
-// function getFirstNumber, getSecondNumber, and getOperator are to see how it would work in
-// the web browser console
-
-
-// getFirstNumber, getSecondNumber, and getOperator functions work. commenting out for now since I don't need to prompt..
-// function getFirstNumber() {
-//   let firstNum = prompt("Please enter first number");
-//   firstNum = Number(firstNum);
-//   return firstNum;
-// }
 
 function getFirstNumber() {
   let firstNum = finalOperandValue;
@@ -132,17 +125,6 @@ function getOperator() {
   let arithmeticOperator = arithmeticButtons;
   return arithmeticOperator;
 }
-
-// function getSecondNumber() {
-//   let secondNum = prompt("Please enter second number");
-//   secondNum = Number(secondNum);
-//   return secondNum;
-// }
-
-// function getOperator() {
-//   let arithmeticOperator = prompt("Please enter an operator for these two numbers. Ex: +, -, /, *");
-//   return arithmeticOperator;
-// }
  
 function add(firstNum, secondNum) {
   answer = firstNum + secondNum;
@@ -168,34 +150,27 @@ function divide(firstNum, secondNum) {
   return answer;
 }
 
-// create a new function `operate` that takes an operator and 2 nums
-// then calls one of the above functions on the numbers
-function operate(getFirstNumber, getOperator, getSecondNumber) {
+function operate(firstNum, arithmeticOperator, secondNum) {
   numButtons();
   passToDisplay(numButtons);
   arithmeticButtons();
-  if (getOperator === "*") {
-    multiply(getFirstNumber, getSecondNumber);
+  equalButton();
+  clearButton();
+  if (arithmeticOperator === "*") {
+    multiply(firstNum, secondNum);
   }
-  else if (getOperator === "/") {
-    divide(getFirstNumber, getSecondNumber);
+  else if (arithmeticOperator === "/") {
+    divide(firstNum, secondNum);
   }
-  else if (getOperator === "+") {
-    add(getFirstNumber, getSecondNumber);
+  else if (arithmeticOperator === "+") {
+    add(firstNum, secondNum);
   }
-  else if (getOperator === "-") {
-    subtract(getFirstNumber, getSecondNumber);
+  else if (arithmeticOperator === "-") {
+    subtract(firstNum, secondNum);
   }
   else {
     console.log("invalid operator. please enter arithmetic operator");
   }
 }
 
-// testing the operate function with functions as parameters
-// getting the user input for first number, operator, and second number.
-// operate(getFirstNumber(), getOperator(), getSecondNumber());
-// numButtons();
-// // passToDisplay(numButtons);
-// arithmeticButtons();
-// getFirstNumber();
 operate();
