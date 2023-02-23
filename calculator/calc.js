@@ -4,13 +4,15 @@ let answer ='';
 
 const calcContainer = document.querySelector(".calculatorContainer");
 
-let buttonPressed = '';
+let firstNumberClicked = '';
 let displayValue = '';
 let addOperatorButton = '';
 let subtractOperatorButton = '';
 let multiplyOperatorButton = '';
 let divideOperatorButton = '';
-let equalSymbolButton = ''
+let equalSymbolClicked = ''
+let operatorClicked = '';
+let secondNumberClicked = '';
 
 let finalOperandValue = '';
 
@@ -20,35 +22,55 @@ calcContainer.appendChild(calcDisplay);
 
 function numButtons() {
   for (i = 0; i < 10; i++) {
-  const numberButtons = document.createElement('button');
-  numberButtons.classList.add('numberButtons');
-  numberButtons.textContent = `${i}`; 
-  calcContainer.appendChild(numberButtons);
-  numberButtons.addEventListener('click', () => {
-    buttonPressed = numberButtons.textContent;
-    finalOperandValue += buttonPressed;
-    console.log(`in the num buttons function. the button pressed was: ${finalOperandValue}`);
-    passToDisplay(finalOperandValue);
-    return finalOperandValue;
-  });
+    const numberButton = document.createElement('button');
+    numberButton.classList.add('numberButton');
+    numberButton.textContent = `${i}`; 
+    calcContainer.appendChild(numberButton);
+    numberButton.addEventListener('click', () => {
+      // firstNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
+      if (operatorClicked != "" ) { // operator button has been clicked
+        secondNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
+        console.log(`second number clicked is: ${secondNumberClicked}`);
+        passToDisplay(secondNumberClicked);
+      }
+      else { // the operator button hasn't been clicked
+        firstNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
+        console.log(`first number clicked is: ${firstNumberClicked}`);
+        passToDisplay(firstNumberClicked);
+      }
+      // finalOperandValue += buttonPressed;
+      // passToDisplay(firstNumberClicked);
+      // return firstNumberClicked;
+    });
   };
 };
 
-function passToDisplay() {
-  displayValue = calcDisplay.textContent = `${finalOperandValue}`;
+function passToDisplay(number) {
+  displayValue = calcDisplay.textContent = number;
   console.log(`display value is: ${displayValue}`);
-  return displayValue;
+  // return displayValue;
 }
+
+// user clicks number 4 ✅
+// number 4 is stored in global variable called firstNumberClicked ✅
+// user clicks "+" button ✅
+// "+" string is stored in global var called operatorClicked ✅
+// user clicks number 3 ✅
+// number 3 is stored in global variable called secondNumberClicked ✅
+// user clicks "=" button
+// operate method is called with (firstNumberClicked, operatorClicked, secondNumberClicked) values
+// then somehow calculator UI displays result of operate method
 
 function arithmeticButtons() {
   const addSymbol = document.createElement('button');
   addSymbol.classList.add('arithmeticOperators');
-  addOperatorButton = addSymbol.textContent = "+";
+  // addOperatorButton = addSymbol.textContent = "+";
+  addSymbol.textContent = "+";
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
-    addOperatorButton = addOperatorButton;
-    console.log(`the add operator button is: ${addOperatorButton}`);
-    return addOperatorButton;
+    operatorClicked = "+"; // use DOM to find value
+    console.log(`the add operator button is: ${operatorClicked}`);
+    return operatorClicked;
   });
 
   const minusSymbol = document.createElement('button');
@@ -85,12 +107,13 @@ function arithmeticButtons() {
 function equalButton() {
   const equalSymbol = document.createElement('button');
   equalSymbol.classList.add('arithmeticOperators');
-  equalSymbolButton = equalSymbol.textContent = "=";
+  equalSymbol.textContent = "=";
   calcContainer.appendChild(equalSymbol);
   equalSymbol.addEventListener('click', () => {
-    equalSymbolButton = equalSymbolButton;
-    console.log(`the equal operator button is: ${equalSymbolButton}`);
-    return equalSymbolButton;
+    equalSymbolClicked = "=";
+    console.log(`the equal operator button is: ${equalSymbolClicked}`);
+    operate(firstNumberClicked, operatorClicked, secondNumberClicked);
+    // return equalSymbolClicked;
   });
 }
 
@@ -151,11 +174,6 @@ function divide(firstNum, secondNum) {
 }
 
 function operate(firstNum, arithmeticOperator, secondNum) {
-  numButtons();
-  passToDisplay(numButtons);
-  arithmeticButtons();
-  equalButton();
-  clearButton();
   if (arithmeticOperator === "*") {
     multiply(firstNum, secondNum);
   }
@@ -163,7 +181,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
     divide(firstNum, secondNum);
   }
   else if (arithmeticOperator === "+") {
-    add(firstNum, secondNum);
+    passToDisplay(add(firstNum, secondNum));
   }
   else if (arithmeticOperator === "-") {
     subtract(firstNum, secondNum);
@@ -173,4 +191,10 @@ function operate(firstNum, arithmeticOperator, secondNum) {
   }
 }
 
-operate();
+// operate();
+
+numButtons();
+passToDisplay(0);
+arithmeticButtons();
+equalButton();
+clearButton();
