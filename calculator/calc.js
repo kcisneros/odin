@@ -29,12 +29,12 @@ function numButtons() {
     numberButton.addEventListener('click', () => {
       // firstNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
       if (operatorClicked != "" ) { // operator button has been clicked
-        secondNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
+        secondNumberClicked = Number(numberButton.textContent); // read number from DOM don't rely on textContent
         console.log(`second number clicked is: ${secondNumberClicked}`);
         passToDisplay(secondNumberClicked);
       }
       else { // the operator button hasn't been clicked
-        firstNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
+        firstNumberClicked = Number(numberButton.textContent); // read number from DOM don't rely on textContent
         console.log(`first number clicked is: ${firstNumberClicked}`);
         passToDisplay(firstNumberClicked);
       }
@@ -57,9 +57,16 @@ function passToDisplay(number) {
 // "+" string is stored in global var called operatorClicked ✅
 // user clicks number 3 ✅
 // number 3 is stored in global variable called secondNumberClicked ✅
-// user clicks "=" button
-// operate method is called with (firstNumberClicked, operatorClicked, secondNumberClicked) values
+// user clicks "=" button ✅
+// operate method is called with (firstNumberClicked, operatorClicked, secondNumberClicked) values ✅
 // then somehow calculator UI displays result of operate method
+
+// change to number. current types are strings ✅
+// fix rest of operators. should be similar to add ✅
+// get clear button to entirely clear everything from the saved state ✅
+// when I type 99 99 shuold appear. when I hit plus it shuold store it. 
+// do multi-number operands
+// operator would store number pressed. 
 
 function arithmeticButtons() {
   const addSymbol = document.createElement('button');
@@ -75,32 +82,35 @@ function arithmeticButtons() {
 
   const minusSymbol = document.createElement('button');
   minusSymbol.classList.add('arithmeticOperators');
-  subtractOperatorButton = minusSymbol.textContent = "-";
+  // subtractOperatorButton = minusSymbol.textContent = "-";
+  minusSymbol.textContent = "-";
   calcContainer.appendChild(minusSymbol);
   minusSymbol.addEventListener('click', () => {
-    subtractOperatorButton = subtractOperatorButton;
-    console.log(`the subtract operator button is: ${subtractOperatorButton}`);
-    return subtractOperatorButton;
+    operatorClicked = "-";
+    console.log(`the subtract operator button is: ${operatorClicked}`);
+    return operatorClicked;
   });
 
   const divisionSymbol = document.createElement('button');
   divisionSymbol.classList.add('arithmeticOperators');
-  divideOperatorButton = divisionSymbol.textContent = "/";
+  // divideOperatorButton = divisionSymbol.textContent = "/";
+  divisionSymbol.textContent = "/";
   calcContainer.appendChild(divisionSymbol);
   divisionSymbol.addEventListener('click', () => {
-    divideOperatorButton = divideOperatorButton;
-    console.log(`the divide operator button is: ${divideOperatorButton}`);
-    return divideOperatorButton;
+    operatorClicked = "/";
+    console.log(`the divide operator button is: ${operatorClicked}`);
+    return operatorClicked;
   });
 
   const multiplicationSymbol = document.createElement('button');
   multiplicationSymbol.classList.add('arithmeticOperators');
-  multiplyOperatorButton = multiplicationSymbol.textContent = "*";
+  // multiplyOperatorButton = multiplicationSymbol.textContent = "*";
+  multiplicationSymbol.textContent = "*";
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
-    multiplyOperatorButton = multiplyOperatorButton;
-    console.log(`the multiply operator button is: ${multiplyOperatorButton}`);
-    return multiplyOperatorButton;
+    operatorClicked = "*";
+    console.log(`the multiply operator button is: ${operatorClicked}`);
+    return operatorClicked;
   });
 }
 
@@ -123,9 +133,10 @@ function clearButton() {
   clearSymbol.textContent = 'Clear';
   calcContainer.appendChild(clearSymbol);
   clearSymbol.addEventListener('click', () => {
-    displayValue = calcDisplay.innerHTML = 0;
-    finalOperandValue = '';
-    console.log(`the clear operator button is: ${clearSymbol.textContent}`);
+    displayValue = calcDisplay.textContent = 0;
+    firstNumberClicked = 0;
+    secondNumberClicked = 0;
+    operatorClicked = '';
     console.log(`the displayValue is: ${displayValue}`)
   });
 }
@@ -151,40 +162,40 @@ function getOperator() {
  
 function add(firstNum, secondNum) {
   answer = firstNum + secondNum;
-  console.log(answer);
+  console.log(`the addition answer is: ${answer}`);
   return answer;
 };
 
 function subtract(firstNum, secondNum) {
   answer = firstNum - secondNum;
-  console.log(answer);
+  console.log(`the subtraction answer is: ${answer}`);
   return answer;
 }
 
 function multiply(firstNum, secondNum) {
   answer = firstNum * secondNum;
-  console.log(answer);
+  console.log(`the multiplication answer is: ${answer}`);
   return answer;
 }
 
 function divide(firstNum, secondNum) {
   answer = firstNum / secondNum;
-  console.log(answer);
+  console.log(`the division answer is: ${answer}`);
   return answer;
 }
 
 function operate(firstNum, arithmeticOperator, secondNum) {
   if (arithmeticOperator === "*") {
-    multiply(firstNum, secondNum);
+    passToDisplay(multiply(firstNum, secondNum));
   }
   else if (arithmeticOperator === "/") {
-    divide(firstNum, secondNum);
+    passToDisplay(divide(firstNum, secondNum));
   }
   else if (arithmeticOperator === "+") {
     passToDisplay(add(firstNum, secondNum));
   }
   else if (arithmeticOperator === "-") {
-    subtract(firstNum, secondNum);
+    passToDisplay(subtract(firstNum, secondNum));
   }
   else {
     console.log("invalid operator. please enter arithmetic operator");
