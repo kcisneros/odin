@@ -15,6 +15,7 @@ let operatorClicked = '';
 let secondNumberClicked = '';
 
 let finalOperandValue = '';
+let secondFinalOperandValue = '';
 
 const calcDisplay = document.createElement('div');
 calcDisplay.classList.add('calculatorDisplay');
@@ -27,20 +28,18 @@ function numButtons() {
     numberButton.textContent = `${i}`; 
     calcContainer.appendChild(numberButton);
     numberButton.addEventListener('click', () => {
-      // firstNumberClicked = numberButton.textContent; // read number from DOM don't rely on textContent
       if (operatorClicked != "" ) { // operator button has been clicked
-        secondNumberClicked = Number(numberButton.textContent); // read number from DOM don't rely on textContent
-        console.log(`second number clicked is: ${secondNumberClicked}`);
-        passToDisplay(secondNumberClicked);
+        secondNumberClicked = Number(numberButton.textContent); 
+        secondFinalOperandValue += secondNumberClicked;
+        console.log(`second number clicked is: ${secondFinalOperandValue}`);
+        passToDisplay(secondFinalOperandValue);
       }
       else { // the operator button hasn't been clicked
-        firstNumberClicked = Number(numberButton.textContent); // read number from DOM don't rely on textContent
-        console.log(`first number clicked is: ${firstNumberClicked}`);
-        passToDisplay(firstNumberClicked);
+        firstNumberClicked = Number(numberButton.textContent);
+        finalOperandValue += firstNumberClicked;
+        console.log(`first number clicked is: ${finalOperandValue}`);
+        passToDisplay(finalOperandValue);
       }
-      // finalOperandValue += buttonPressed;
-      // passToDisplay(firstNumberClicked);
-      // return firstNumberClicked;
     });
   };
 };
@@ -48,67 +47,45 @@ function numButtons() {
 function passToDisplay(number) {
   displayValue = calcDisplay.textContent = number;
   console.log(`display value is: ${displayValue}`);
-  // return displayValue;
 }
-
-// user clicks number 4 ✅
-// number 4 is stored in global variable called firstNumberClicked ✅
-// user clicks "+" button ✅
-// "+" string is stored in global var called operatorClicked ✅
-// user clicks number 3 ✅
-// number 3 is stored in global variable called secondNumberClicked ✅
-// user clicks "=" button ✅
-// operate method is called with (firstNumberClicked, operatorClicked, secondNumberClicked) values ✅
-// then somehow calculator UI displays result of operate method
-
-// change to number. current types are strings ✅
-// fix rest of operators. should be similar to add ✅
-// get clear button to entirely clear everything from the saved state ✅
-// when I type 99 99 shuold appear. when I hit plus it shuold store it. 
-// do multi-number operands
-// operator would store number pressed. 
 
 function arithmeticButtons() {
   const addSymbol = document.createElement('button');
   addSymbol.classList.add('arithmeticOperators');
-  // addOperatorButton = addSymbol.textContent = "+";
   addSymbol.textContent = "+";
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
-    operatorClicked = "+"; // use DOM to find value
+    operatorClicked = addSymbol.textContent;
     console.log(`the add operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
 
   const minusSymbol = document.createElement('button');
   minusSymbol.classList.add('arithmeticOperators');
-  // subtractOperatorButton = minusSymbol.textContent = "-";
   minusSymbol.textContent = "-";
   calcContainer.appendChild(minusSymbol);
   minusSymbol.addEventListener('click', () => {
-    operatorClicked = "-";
+    operatorClicked = minusSymbol.textContent;
     console.log(`the subtract operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
 
   const divisionSymbol = document.createElement('button');
   divisionSymbol.classList.add('arithmeticOperators');
-  // divideOperatorButton = divisionSymbol.textContent = "/";
   divisionSymbol.textContent = "/";
   calcContainer.appendChild(divisionSymbol);
   divisionSymbol.addEventListener('click', () => {
-    operatorClicked = "/";
+    operatorClicked = divisionSymbol.textContent;
     console.log(`the divide operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
 
   const multiplicationSymbol = document.createElement('button');
   multiplicationSymbol.classList.add('arithmeticOperators');
-  // multiplyOperatorButton = multiplicationSymbol.textContent = "*";
   multiplicationSymbol.textContent = "*";
   calcContainer.appendChild(multiplicationSymbol);
   multiplicationSymbol.addEventListener('click', () => {
-    operatorClicked = "*";
+    operatorClicked = multiplicationSymbol.textContent;
     console.log(`the multiply operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
@@ -122,7 +99,7 @@ function equalButton() {
   equalSymbol.addEventListener('click', () => {
     equalSymbolClicked = "=";
     console.log(`the equal operator button is: ${equalSymbolClicked}`);
-    operate(firstNumberClicked, operatorClicked, secondNumberClicked);
+    operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
     // return equalSymbolClicked;
   });
 }
@@ -134,34 +111,15 @@ function clearButton() {
   calcContainer.appendChild(clearSymbol);
   clearSymbol.addEventListener('click', () => {
     displayValue = calcDisplay.textContent = 0;
-    firstNumberClicked = 0;
-    secondNumberClicked = 0;
+    finalOperandValue = '';
+    secondFinalOperandValue = '';
     operatorClicked = '';
     console.log(`the displayValue is: ${displayValue}`)
   });
 }
-
-function getFirstNumber() {
-  let firstNum = finalOperandValue;
-  firstNum = Number(firstNum);
-  console.log(`in getfirstNumber function, the number is: ${firstNum}`);
-  return firstNum;
-}
-
-function getSecondNumber() {
-  let secondNum = finalOperandValue;
-  secondNum = Number(secondNum);
-  console.log(`in getSecondNumber function, the number is: ${secondNum}`);
-  return secondNum;
-}
-
-function getOperator() {
-  let arithmeticOperator = arithmeticButtons;
-  return arithmeticOperator;
-}
  
 function add(firstNum, secondNum) {
-  answer = firstNum + secondNum;
+  answer = Number(firstNum) + Number(secondNum); // not sure why I have to declare the number type here again..
   console.log(`the addition answer is: ${answer}`);
   return answer;
 };
@@ -202,10 +160,26 @@ function operate(firstNum, arithmeticOperator, secondNum) {
   }
 }
 
-// operate();
-
 numButtons();
 passToDisplay(0);
 arithmeticButtons();
 equalButton();
 clearButton();
+
+
+// user clicks number 4 ✅
+// number 4 is stored in global variable called firstNumberClicked ✅
+// user clicks "+" button ✅
+// "+" string is stored in global var called operatorClicked ✅
+// user clicks number 3 ✅
+// number 3 is stored in global variable called secondNumberClicked ✅
+// user clicks "=" button ✅
+// operate method is called with (firstNumberClicked, operatorClicked, secondNumberClicked) values ✅
+// then somehow calculator UI displays result of operate method
+
+// change to number. current types are strings ✅
+// fix rest of operators. should be similar to add ✅
+// get clear button to entirely clear everything from the saved state ✅
+// when I type 99 99 shuold appear. when I hit plus it shuold store it. ✅
+// do multi-number operands
+// operator would store number pressed. 
