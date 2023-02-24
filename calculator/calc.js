@@ -31,13 +31,13 @@ function numButtons() {
       if (operatorClicked != "" ) { // operator button has been clicked
         secondNumberClicked = Number(numberButton.textContent); 
         secondFinalOperandValue += secondNumberClicked;
-        console.log(`second number clicked is: ${secondFinalOperandValue}`);
+        // console.log(`second number clicked is: ${secondFinalOperandValue}`);
         passToDisplay(secondFinalOperandValue);
       }
       else { // the operator button hasn't been clicked
         firstNumberClicked = Number(numberButton.textContent);
         finalOperandValue += firstNumberClicked;
-        console.log(`first number clicked is: ${finalOperandValue}`);
+        // console.log(`first number clicked is: ${finalOperandValue}`);
         passToDisplay(finalOperandValue);
       }
     });
@@ -47,6 +47,7 @@ function numButtons() {
 function passToDisplay(number) {
   displayValue = calcDisplay.textContent = number;
   console.log(`display value is: ${displayValue}`);
+  return displayValue;
 }
 
 function arithmeticButtons() {
@@ -56,6 +57,7 @@ function arithmeticButtons() {
   calcContainer.appendChild(addSymbol);
   addSymbol.addEventListener('click', () => {
     operatorClicked = addSymbol.textContent;
+    passToDisplay(operatorClicked);
     console.log(`the add operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
@@ -100,7 +102,6 @@ function equalButton() {
     equalSymbolClicked = "=";
     console.log(`the equal operator button is: ${equalSymbolClicked}`);
     operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-    // return equalSymbolClicked;
   });
 }
 
@@ -120,40 +121,89 @@ function clearButton() {
  
 function add(firstNum, secondNum) {
   answer = Number(firstNum) + Number(secondNum); // not sure why I have to declare the number type here again..
-  console.log(`the addition answer is: ${answer}`);
+  // console.log(`the addition answer is: ${answer}`);
   return answer;
 };
 
 function subtract(firstNum, secondNum) {
   answer = firstNum - secondNum;
-  console.log(`the subtraction answer is: ${answer}`);
+  // console.log(`the subtraction answer is: ${answer}`);
   return answer;
 }
 
 function multiply(firstNum, secondNum) {
   answer = firstNum * secondNum;
-  console.log(`the multiplication answer is: ${answer}`);
+  // console.log(`the multiplication answer is: ${answer}`);
+  // displayValue = answer;
   return answer;
 }
 
 function divide(firstNum, secondNum) {
   answer = firstNum / secondNum;
-  console.log(`the division answer is: ${answer}`);
+  // console.log(`the division answer is: ${answer}`);
   return answer;
 }
 
 function operate(firstNum, arithmeticOperator, secondNum) {
   if (arithmeticOperator === "*") {
-    passToDisplay(multiply(firstNum, secondNum));
+    if (answer == 0) {
+      passToDisplay(multiply(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
+    else {
+      firstNum = answer;
+      secondNum = secondNumberClicked;
+
+      console.log(`firstnum is ${firstNum}`);
+      console.log(`secondnum is ${secondNum}`);
+      passToDisplay(multiply(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
   }
   else if (arithmeticOperator === "/") {
-    passToDisplay(divide(firstNum, secondNum));
+    if (answer == 0) {
+      passToDisplay(divide(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
+    else {
+      firstNum = answer;
+      secondNum = secondNumberClicked;
+
+      console.log(`firstnum is ${firstNum}`);
+      console.log(`secondnum is ${secondNum}`);
+      passToDisplay(divide(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
   }
   else if (arithmeticOperator === "+") {
-    passToDisplay(add(firstNum, secondNum));
+    if (answer == 0) {
+      passToDisplay(add(firstNum, secondNum)); 
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`); 
+    }
+    else {
+      firstNum = answer;
+      secondNum = secondNumberClicked;
+
+      console.log(`firstnum is ${firstNum}`);
+      console.log(`secondnum is ${secondNum}`);
+      passToDisplay(add(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`); 
+    }
+    // 12 + 7 - 5 * 3 =
   }
   else if (arithmeticOperator === "-") {
-    passToDisplay(subtract(firstNum, secondNum));
+    if (answer == 0) {
+      passToDisplay(subtract(firstNum, secondNum)); // have if/else? if dispalyvalue is nil do math else set to answer?  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
+    else {
+      firstNum = answer;
+      secondNum = secondNumberClicked;
+      console.log(`firstnum is ${firstNum}`);
+      console.log(`secondnum is ${secondNum}`);
+      passToDisplay(subtract(firstNum, secondNum));  
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+    }
   }
   else {
     console.log("invalid operator. please enter arithmetic operator");
