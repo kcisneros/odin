@@ -104,27 +104,36 @@ function arithmeticButtons() {
 
 // event listener (click) for arithmetic buttons
 function arithmeticButtonsEventListener() {
+
   addSymbol = document.getElementsByClassName('addButton');
   addSymbol[0].addEventListener('click', () => {
-    operatorClicked = addSymbol[0].textContent;
-    console.log(`the add operator button is: ${operatorClicked}`);
     if (secondFinalOperandValue != '') {
       operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
       finalOperandValue = calcDisplay.textContent;
       secondFinalOperandValue = '';
     }
+    operatorClicked = addSymbol[0].textContent;
     return operatorClicked;
   });
 
   minusSymbol = document.getElementsByClassName('minusButton');
   minusSymbol[0].addEventListener('click', () => {
+    if (secondFinalOperandValue != '') {
+      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
+      finalOperandValue = calcDisplay.textContent;
+      secondFinalOperandValue = '';
+    }
     operatorClicked = minusSymbol[0].textContent;
-    console.log(`the subtract operator button is: ${operatorClicked}`);
     return operatorClicked;  
   });
 
   divisionSymbol = document.getElementsByClassName('divideButton');
   divisionSymbol[0].addEventListener('click', () => {
+    if (secondFinalOperandValue != '') {
+      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
+      finalOperandValue = calcDisplay.textContent;
+      secondFinalOperandValue = '';
+    }
     operatorClicked = divisionSymbol[0].textContent;
     console.log(`the division operator button is: ${operatorClicked}`);
     return operatorClicked;  
@@ -132,6 +141,11 @@ function arithmeticButtonsEventListener() {
 
   multiplicationSymbol = document.getElementsByClassName('multiplyButton');
   multiplicationSymbol[0].addEventListener('click', () => {
+    if (secondFinalOperandValue != '') {
+      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
+      finalOperandValue = calcDisplay.textContent;
+      secondFinalOperandValue = '';
+    }
     operatorClicked = multiplicationSymbol[0].textContent;
     console.log(`the multiply operator button is: ${operatorClicked}`);
     return operatorClicked;
@@ -208,6 +222,9 @@ function multiply(firstNum, secondNum) {
 
 // does division operation
 function divide(firstNum, secondNum) {
+  if (secondNum == 0 || firstNum == 0) {
+    alert("Can't divide by zero, clown");
+  }
   answer = firstNum / secondNum;
   answer = Math.round(answer * 100) / 100;
   // console.log(`the division answer is: ${answer}`);
@@ -278,7 +295,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
     }
   }
   else {
-    console.log("invalid operator. please enter arithmetic operator");
+    alert("invalid operator. please enter arithmetic operator");
   }
 }
 
@@ -293,8 +310,6 @@ equalButtonEventListener();
 clearButtonEventListener();
 
 // pseudocode can be found here: https://jamboard.google.com/d/19jn6yRp9j1SMViSUJZOhzyi9M6nSDwYPEeXEj7kneQI/viewer?f=0
-// current issue:
-// 1. trying to figure out how to chain operations without pressing the = button
 
 // notes
 // 1. I think I figured out how to get the buttons function to be separated from the event listener for the numbers
