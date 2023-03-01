@@ -15,6 +15,12 @@ let operatorClicked = '';
 let secondNumberClicked = '';
 
 let numberButton = '';
+let addSymbol = '';
+let minusSymbol = '';
+let divisionSymbol = '';
+let multiplicationSymbol = '';
+let equalSymbol = '';
+let clearSymbol = '';
 
 let finalOperandValue = '';
 let secondFinalOperandValue = '';
@@ -31,7 +37,6 @@ function numButtons() {
     numberButton.textContent = `${i}`;
     calcContainer.appendChild(numberButton);
   }
-  console.log(`number button is: ${numberButton.length}`);
 }
 
 // create event listener for buttons
@@ -48,7 +53,6 @@ function numButtonEventListener() {
         console.log(`the second number value clicked is: ${secondNumberClicked}`);
         console.log(`the second operand value clicked is: ${secondFinalOperandValue}`); // shows double digit nums
         // console.log(`second number clicked is: ${secondFinalOperandValue}`);
-        console.log(`number button is ${numberButton[i]}`);
         passToDisplay(secondFinalOperandValue); //commenting this line out seemed to clear out the display value issue i was seeing where it was adding the string data type numbers together (aka 21 instead of just 2 and just 1)
         // passToDisplay(secondNumberClicked);
       }
@@ -58,68 +62,91 @@ function numButtonEventListener() {
         console.log(`the first number clicked is: ${firstNumberClicked}`);
         console.log(`the first operand clicked is: ${finalOperandValue}`); // shows double digit nums
         // console.log(`first number clicked is: ${finalOperandValue}`);
-        console.log(`number button is ${numberButton[i]}`);
         passToDisplay(finalOperandValue);
       }
   });
   }
 }
 
+// this is the "display" for the calculator
 function passToDisplay(number) {
   displayValue = calcDisplay.textContent = number;
   console.log(`display value is: ${displayValue}`);
   return displayValue;
 }
 
+// creates arithmetic buttons (+, -, *, /)
 function arithmeticButtons() {
-  const addSymbol = document.createElement('button');
+  addSymbol = document.createElement('button');
   addSymbol.classList.add('arithmeticOperators');
+  addSymbol.classList.add('addButton');
   addSymbol.textContent = "+";
   calcContainer.appendChild(addSymbol);
-  addSymbol.addEventListener('click', () => {
-    operatorClicked = addSymbol.textContent;
+
+  minusSymbol = document.createElement('button');
+  minusSymbol.classList.add('arithmeticOperators');
+  minusSymbol.classList.add('minusButton');
+  minusSymbol.textContent = "-";
+  calcContainer.appendChild(minusSymbol);
+
+  divisionSymbol = document.createElement('button');
+  divisionSymbol.classList.add('arithmeticOperators');
+  divisionSymbol.classList.add('divideButton');
+  divisionSymbol.textContent = "/";
+  calcContainer.appendChild(divisionSymbol);
+
+  multiplicationSymbol = document.createElement('button');
+  multiplicationSymbol.classList.add('arithmeticOperators');
+  multiplicationSymbol.classList.add('multiplyButton');
+  multiplicationSymbol.textContent = "*";
+  calcContainer.appendChild(multiplicationSymbol);
+}
+
+// event listener (click) for arithmetic buttons
+function arithmeticButtonsEventListener() {
+  addSymbol = document.getElementsByClassName('addButton');
+  addSymbol[0].addEventListener('click', () => {
+    operatorClicked = addSymbol[0].textContent;
     console.log(`the add operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
 
-  const minusSymbol = document.createElement('button');
-  minusSymbol.classList.add('arithmeticOperators');
-  minusSymbol.textContent = "-";
-  calcContainer.appendChild(minusSymbol);
-  minusSymbol.addEventListener('click', () => {
-    operatorClicked = minusSymbol.textContent;
+  minusSymbol = document.getElementsByClassName('minusButton');
+  minusSymbol[0].addEventListener('click', () => {
+    operatorClicked = minusSymbol[0].textContent;
     console.log(`the subtract operator button is: ${operatorClicked}`);
-    return operatorClicked;
+    return operatorClicked;  
   });
 
-  const divisionSymbol = document.createElement('button');
-  divisionSymbol.classList.add('arithmeticOperators');
-  divisionSymbol.textContent = "/";
-  calcContainer.appendChild(divisionSymbol);
-  divisionSymbol.addEventListener('click', () => {
-    operatorClicked = divisionSymbol.textContent;
-    console.log(`the divide operator button is: ${operatorClicked}`);
-    return operatorClicked;
+  divisionSymbol = document.getElementsByClassName('divideButton');
+  divisionSymbol[0].addEventListener('click', () => {
+    operatorClicked = divisionSymbol[0].textContent;
+    console.log(`the division operator button is: ${operatorClicked}`);
+    return operatorClicked;  
   });
 
-  const multiplicationSymbol = document.createElement('button');
-  multiplicationSymbol.classList.add('arithmeticOperators');
-  multiplicationSymbol.textContent = "*";
-  calcContainer.appendChild(multiplicationSymbol);
-  multiplicationSymbol.addEventListener('click', () => {
-    operatorClicked = multiplicationSymbol.textContent;
+  multiplicationSymbol = document.getElementsByClassName('multiplyButton');
+  multiplicationSymbol[0].addEventListener('click', () => {
+    operatorClicked = multiplicationSymbol[0].textContent;
     console.log(`the multiply operator button is: ${operatorClicked}`);
     return operatorClicked;
   });
 }
 
+// creates equal button
 function equalButton() {
-  const equalSymbol = document.createElement('button');
+  equalSymbol = document.createElement('button');
   equalSymbol.classList.add('arithmeticOperators');
+  equalSymbol.classList.add('equalButton');
   equalSymbol.textContent = "=";
   calcContainer.appendChild(equalSymbol);
-  equalSymbol.addEventListener('click', () => {
-    equalSymbolClicked = "=";
+}
+
+// event listener for equal button
+function equalButtonEventListener() {
+  equalSymbol = document.getElementsByClassName('equalButton');
+  equalSymbol[0].addEventListener('click', () => {
+    equalSymbolClicked = equalSymbol[0].textContent;
     console.log(`the equal operator button is: ${equalSymbolClicked}`);
     operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
     finalOperandValue = '';
@@ -128,12 +155,19 @@ function equalButton() {
   });
 }
 
+// creates clear button
 function clearButton() {
-  const clearSymbol = document.createElement('button');
+  clearSymbol = document.createElement('button');
   clearSymbol.classList.add('arithmeticOperators');
+  clearSymbol.classList.add('clearButton');
   clearSymbol.textContent = 'Clear';
   calcContainer.appendChild(clearSymbol);
-  clearSymbol.addEventListener('click', () => {
+}
+
+// event listener for clear button
+function clearButtonEventListener() {
+  clearSymbol = document.getElementsByClassName('clearButton');
+  clearSymbol[0].addEventListener('click', () => {
     displayValue = calcDisplay.textContent = 0;
     finalOperandValue = '';
     secondFinalOperandValue = '';
@@ -142,14 +176,15 @@ function clearButton() {
     console.log(`the displayValue is: ${displayValue}`)
   });
 }
- 
+
+// does addition operation
 function add(firstNum, secondNum) {
   answer = Number(firstNum) + Number(secondNum); // not sure why I have to declare the number type here again..
   answer = Math.round(answer * 100) / 100;
-  // console.log(`the addition answer is: ${answer}`);
   return answer;
 };
 
+// does subtraction operation
 function subtract(firstNum, secondNum) {
   answer = firstNum - secondNum;
   answer = Math.round(answer * 100) / 100;
@@ -157,6 +192,7 @@ function subtract(firstNum, secondNum) {
   return answer;
 }
 
+// does multiplication operation
 function multiply(firstNum, secondNum) {
   answer = firstNum * secondNum;
   answer = Math.round(answer * 100) / 100;
@@ -165,6 +201,7 @@ function multiply(firstNum, secondNum) {
   return answer;
 }
 
+// does division operation
 function divide(firstNum, secondNum) {
   answer = firstNum / secondNum;
   answer = Math.round(answer * 100) / 100;
@@ -172,6 +209,8 @@ function divide(firstNum, secondNum) {
   return answer;
 }
 
+// operate function takes in three params and depending on the operator in the param
+// it sends it to one of the functions defined above
 function operate(firstNum, arithmeticOperator, secondNum) {
   if (arithmeticOperator === "*") {
     if (answer == 0) {
@@ -244,6 +283,10 @@ numButtonEventListener();
 arithmeticButtons();
 equalButton();
 clearButton();
+arithmeticButtonsEventListener();
+equalButtonEventListener();
+clearButtonEventListener();
+
 
 // pseudocode can be found here: https://jamboard.google.com/d/19jn6yRp9j1SMViSUJZOhzyi9M6nSDwYPEeXEj7kneQI/viewer?f=0
 // current issue:
@@ -251,4 +294,4 @@ clearButton();
 
 // notes
 // 1. I think I figured out how to get the buttons function to be separated from the event listener for the numbers
-// 2. will try and replicate that for the operation buttons after committing the current working code
+// 2. will try and replicate that for the operation buttons after committing the current working code -- done, I think this works for all buttons now
