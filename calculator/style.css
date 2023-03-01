@@ -13,10 +13,9 @@ h1 {
   margin: auto;
 } 
 
-.numberButtons {
+.numberButton {
   width: 60px;
   height: 60px;
-  /* border: 4px solid gray; */
   background: skyblue;
   align-items: center;
 }
@@ -35,5 +34,4 @@ h1 {
   background-color: goldenrod;
   width: 50px;
   height: 50px;
-  /* margin-left: auto; */
 }
