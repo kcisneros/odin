@@ -108,6 +108,11 @@ function arithmeticButtonsEventListener() {
   addSymbol[0].addEventListener('click', () => {
     operatorClicked = addSymbol[0].textContent;
     console.log(`the add operator button is: ${operatorClicked}`);
+    if (secondFinalOperandValue != '') {
+      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
+      finalOperandValue = calcDisplay.textContent;
+      secondFinalOperandValue = '';
+    }
     return operatorClicked;
   });
 
@@ -286,7 +291,6 @@ clearButton();
 arithmeticButtonsEventListener();
 equalButtonEventListener();
 clearButtonEventListener();
-
 
 // pseudocode can be found here: https://jamboard.google.com/d/19jn6yRp9j1SMViSUJZOhzyi9M6nSDwYPEeXEj7kneQI/viewer?f=0
 // current issue:
