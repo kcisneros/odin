@@ -124,7 +124,7 @@ function arithmeticButtons(operatorButtons) {
 function arithmeticButtonsEventListener() {
 
   symbols.forEach((symbol) => {
-    btnClick = document.getElementsByClassName('addSymbol');
+    let btnClick = document.getElementsByClassName(symbol);
     btnClick[0].addEventListener('click', () => {
       if (calculatorState.secondFinalOperandValue != '') {
         // this operate function doesn't work quite right anymore I think it's because of the calculatorState.operatorClicked
@@ -132,7 +132,7 @@ function arithmeticButtonsEventListener() {
         calculatorState.finalOperandValue = calcDisplay.textContent;
         calculatorState.secondFinalOperandValue = '';
       }
-      calculatorState.operatorClicked = symbol[0].textContent;
+      calculatorState.operatorClicked = btnClick[0].textContent;
       return calculatorState.operatorClicked;
     });
   })
@@ -205,6 +205,29 @@ function arithmeticButtonsEventListener() {
 //     calculatorState.secondFinalOperandValue = '';
 //   });
 // }
+
+function equalButtonEventListener() {
+  let eqBtnClick = document.getElementsByClassName('equalSymbol');
+  eqBtnClick[0].addEventListener('click', () => {
+    equalSymbolClicked = eqBtnClick[0].textContent;
+    operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+    calculatorState.finalOperandValue = '';
+    calculatorState.operatorClicked = '';
+    calculatorState.secondFinalOperandValue = '';
+  })
+}
+
+function clearButtonEventListener() {
+  let clBtnClick = document.getElementsByClassName('clearSymbol');
+  clBtnClick[0].addEventListener('click', () => {
+    calcDisplay.textContent = 0;
+    calculatorState.displayValue = calcDisplay.textContent;
+    calculatorState.finalOperandValue = '';
+    calculatorState.secondFinalOperandValue = '';
+    calculatorState.operatorClicked  = '';
+    calculatorState.answer = '';
+  })
+}
 
 // creates clear button
 // function clearButton() {
@@ -310,6 +333,12 @@ function operate(firstNum, arithmeticOperator, secondNum) {
       secondNum = calculatorState.secondFinalOperandValue;
       passToDisplay(subtract(firstNum, secondNum));  
     }
+  }
+  else if (arithmeticOperator === "=") {
+    equalButtonEventListener();
+  }
+  else if (arithmeticOperator === "Clear") {
+    clearButtonEventListener();
   }
   else {
     alert("invalid operator. please enter arithmetic operator");
