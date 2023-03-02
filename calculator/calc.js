@@ -19,6 +19,9 @@ const operatorButtons = {
   clearSymbol: "Clear",
 }
 
+let symbols = Object.keys(operatorButtons);
+console.log(symbols);
+
 // object creation 
 let calculatorState = {
   displayValue: '',
@@ -78,127 +81,153 @@ function passToDisplay(number) {
   return calculatorState.displayValue;
 }
 
-// creates arithmetic buttons (+, -, *, /)
-function arithmeticButtons() {
-  addSymbol = document.createElement('button');
-  addSymbol.classList.add('arithmeticOperators');
-  addSymbol.classList.add('addButton');
-  addSymbol.textContent = operatorButtons.addSymbol;
-  calcContainer.appendChild(addSymbol);
-
-  minusSymbol = document.createElement('button');
-  minusSymbol.classList.add('arithmeticOperators');
-  minusSymbol.classList.add('minusButton');
-  minusSymbol.textContent = operatorButtons.minusSymbol;
-  calcContainer.appendChild(minusSymbol);
-
-  divisionSymbol = document.createElement('button');
-  divisionSymbol.classList.add('arithmeticOperators');
-  divisionSymbol.classList.add('divideButton');
-  divisionSymbol.textContent = operatorButtons.divisionSymbol;
-  calcContainer.appendChild(divisionSymbol);
-
-  multiplicationSymbol = document.createElement('button');
-  multiplicationSymbol.classList.add('arithmeticOperators');
-  multiplicationSymbol.classList.add('multiplyButton');
-  multiplicationSymbol.textContent = operatorButtons.multiplicationSymbol;
-  calcContainer.appendChild(multiplicationSymbol);
+// this function should take in a param for each operator button object?
+// and loop through creating the right button, class, and text content while appending to container
+function arithmeticButtons(operatorButtons) {
+  symbols.forEach((symbol) => {
+    button = document.createElement('button');
+    button.classList.add('arithmeticOperators', symbol);
+    // button.classList.add(symbol);
+    button.textContent = `${operatorButtons[symbol]}`;
+    calcContainer.appendChild(button);
+  })
 }
+
+// // creates arithmetic buttons (+, -, *, /) -- THE FOLLOWING LINES WORK, JUST COMMENTING OUT TO SEE IF I CAN DRY UP THE OPERATIONS HERE
+// function arithmeticButtons() {
+//   addSymbol = document.createElement('button');
+//   addSymbol.classList.add('arithmeticOperators');
+//   addSymbol.classList.add('addButton');
+//   addSymbol.textContent = operatorButtons.addSymbol;
+//   calcContainer.appendChild(addSymbol);
+
+//   minusSymbol = document.createElement('button');
+//   minusSymbol.classList.add('arithmeticOperators');
+//   minusSymbol.classList.add('minusButton');
+//   minusSymbol.textContent = operatorButtons.minusSymbol;
+//   calcContainer.appendChild(minusSymbol);
+
+//   divisionSymbol = document.createElement('button');
+//   divisionSymbol.classList.add('arithmeticOperators');
+//   divisionSymbol.classList.add('divideButton');
+//   divisionSymbol.textContent = operatorButtons.divisionSymbol;
+//   calcContainer.appendChild(divisionSymbol);
+
+//   multiplicationSymbol = document.createElement('button');
+//   multiplicationSymbol.classList.add('arithmeticOperators');
+//   multiplicationSymbol.classList.add('multiplyButton');
+//   multiplicationSymbol.textContent = operatorButtons.multiplicationSymbol;
+//   calcContainer.appendChild(multiplicationSymbol);
+// }
 
 // event listener (click) for arithmetic buttons
 function arithmeticButtonsEventListener() {
 
-  addSymbol = document.getElementsByClassName('addButton');
-  addSymbol[0].addEventListener('click', () => {
-    if (calculatorState.secondFinalOperandValue != '') {
-      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-      calculatorState.finalOperandValue = calcDisplay.textContent;
-      calculatorState.secondFinalOperandValue = '';
-    }
-    calculatorState.operatorClicked = addSymbol[0].textContent;
-    return calculatorState.operatorClicked;
-  });
+  symbols.forEach((symbol) => {
+    btnClick = document.getElementsByClassName('addSymbol');
+    btnClick[0].addEventListener('click', () => {
+      if (calculatorState.secondFinalOperandValue != '') {
+        // this operate function doesn't work quite right anymore I think it's because of the calculatorState.operatorClicked
+        operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+        calculatorState.finalOperandValue = calcDisplay.textContent;
+        calculatorState.secondFinalOperandValue = '';
+      }
+      calculatorState.operatorClicked = symbol[0].textContent;
+      return calculatorState.operatorClicked;
+    });
+  })
 
-  minusSymbol = document.getElementsByClassName('minusButton');
-  minusSymbol[0].addEventListener('click', () => {
-    if (calculatorState.secondFinalOperandValue != '') {
-      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-      calculatorState.finalOperandValue = calcDisplay.textContent;
-      calculatorState.secondFinalOperandValue = '';
-    }
-    calculatorState.operatorClicked = minusSymbol[0].textContent;
-    return calculatorState.operatorClicked;  
-  });
+  // addSymbol = document.getElementsByClassName('addSymbol');
+  // addSymbol[0].addEventListener('click', () => {
+  //   if (calculatorState.secondFinalOperandValue != '') {
+  //     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+  //     calculatorState.finalOperandValue = calcDisplay.textContent;
+  //     calculatorState.secondFinalOperandValue = '';
+  //   }
+  //   calculatorState.operatorClicked = addSymbol[0].textContent;
+  //   return calculatorState.operatorClicked;
+  // });
 
-  divisionSymbol = document.getElementsByClassName('divideButton');
-  divisionSymbol[0].addEventListener('click', () => {
-    if (calculatorState.secondFinalOperandValue != '') {
-      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-      calculatorState.finalOperandValue = calcDisplay.textContent;
-      calculatorState.secondFinalOperandValue = '';
-    }
-    calculatorState.operatorClicked = divisionSymbol[0].textContent;
-    console.log(`the division operator button is: ${calculatorState.operatorClicked}`);
-    return calculatorState.operatorClicked;  
-  });
+  // minusSymbol = document.getElementsByClassName('minusButton');
+  // minusSymbol[0].addEventListener('click', () => {
+  //   if (calculatorState.secondFinalOperandValue != '') {
+  //     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+  //     calculatorState.finalOperandValue = calcDisplay.textContent;
+  //     calculatorState.secondFinalOperandValue = '';
+  //   }
+  //   calculatorState.operatorClicked = minusSymbol[0].textContent;
+  //   return calculatorState.operatorClicked;  
+  // });
 
-  multiplicationSymbol = document.getElementsByClassName('multiplyButton');
-  multiplicationSymbol[0].addEventListener('click', () => {
-    if (calculatorState.secondFinalOperandValue != '') {
-      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-      calculatorState.finalOperandValue = calcDisplay.textContent;
-      calculatorState.secondFinalOperandValue = '';
-    }
-    calculatorState.operatorClicked = multiplicationSymbol[0].textContent;
-    console.log(`the multiply operator button is: ${calculatorState.operatorClicked}`);
-    return calculatorState.operatorClicked;
-  });
+  // divisionSymbol = document.getElementsByClassName('divideButton');
+  // divisionSymbol[0].addEventListener('click', () => {
+  //   if (calculatorState.secondFinalOperandValue != '') {
+  //     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+  //     calculatorState.finalOperandValue = calcDisplay.textContent;
+  //     calculatorState.secondFinalOperandValue = '';
+  //   }
+  //   calculatorState.operatorClicked = divisionSymbol[0].textContent;
+  //   console.log(`the division operator button is: ${calculatorState.operatorClicked}`);
+  //   return calculatorState.operatorClicked;  
+  // });
+
+  // multiplicationSymbol = document.getElementsByClassName('multiplyButton');
+  // multiplicationSymbol[0].addEventListener('click', () => {
+  //   if (calculatorState.secondFinalOperandValue != '') {
+  //     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+  //     calculatorState.finalOperandValue = calcDisplay.textContent;
+  //     calculatorState.secondFinalOperandValue = '';
+  //   }
+  //   calculatorState.operatorClicked = multiplicationSymbol[0].textContent;
+  //   console.log(`the multiply operator button is: ${calculatorState.operatorClicked}`);
+  //   return calculatorState.operatorClicked;
+  // });
 }
 
 // creates equal button
-function equalButton() {
-  equalSymbol = document.createElement('button');
-  equalSymbol.classList.add('arithmeticOperators');
-  equalSymbol.classList.add('equalButton');
-  equalSymbol.textContent = "=";
-  calcContainer.appendChild(equalSymbol);
-}
+// function equalButton() {
+//   equalSymbol = document.createElement('button');
+//   equalSymbol.classList.add('arithmeticOperators');
+//   equalSymbol.classList.add('equalButton');
+//   // equalSymbol.textContent = "=";
+//   calcContainer.appendChild(equalSymbol);
+// }
 
-// event listener for equal button
-function equalButtonEventListener() {
-  equalSymbol = document.getElementsByClassName('equalButton');
-  equalSymbol[0].addEventListener('click', () => {
-    equalSymbolClicked = equalSymbol[0].textContent;
-    console.log(`the equal operator button is: ${equalSymbolClicked}`);
-    operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-    calculatorState.finalOperandValue = '';
-    calculatorState.operatorClicked = '';
-    calculatorState.secondFinalOperandValue = '';
-  });
-}
+// // event listener for equal button
+// function equalButtonEventListener() {
+//   equalSymbol = document.getElementsByClassName('equalButton');
+//   equalSymbol[0].addEventListener('click', () => {
+//     equalSymbolClicked = equalSymbol[0].textContent;
+//     console.log(`the equal operator button is: ${equalSymbolClicked}`);
+//     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+//     calculatorState.finalOperandValue = '';
+//     calculatorState.operatorClicked = '';
+//     calculatorState.secondFinalOperandValue = '';
+//   });
+// }
 
 // creates clear button
-function clearButton() {
-  clearSymbol = document.createElement('button');
-  clearSymbol.classList.add('arithmeticOperators');
-  clearSymbol.classList.add('clearButton');
-  clearSymbol.textContent = 'Clear';
-  calcContainer.appendChild(clearSymbol);
-}
+// function clearButton() {
+//   clearSymbol = document.createElement('button');
+//   clearSymbol.classList.add('arithmeticOperators');
+//   clearSymbol.classList.add('clearButton');
+//   // clearSymbol.textContent = 'Clear';
+//   calcContainer.appendChild(clearSymbol);
+// }
 
-// event listener for clear button
-function clearButtonEventListener() {
-  clearSymbol = document.getElementsByClassName('clearButton');
-  clearSymbol[0].addEventListener('click', () => {
-    calcDisplay.textContent = 0;
-    calculatorState.displayValue = calcDisplay.textContent;
-    calculatorState.finalOperandValue = '';
-    calculatorState.secondFinalOperandValue = '';
-    calculatorState.operatorClicked  = '';
-    calculatorState.answer = '';
-    console.log(`the displayValue is: ${calculatorState.displayValue}`)
-  });
-}
+// // event listener for clear button
+// function clearButtonEventListener() {
+//   clearSymbol = document.getElementsByClassName('clearButton');
+//   clearSymbol[0].addEventListener('click', () => {
+//     calcDisplay.textContent = 0;
+//     calculatorState.displayValue = calcDisplay.textContent;
+//     calculatorState.finalOperandValue = '';
+//     calculatorState.secondFinalOperandValue = '';
+//     calculatorState.operatorClicked  = '';
+//     calculatorState.answer = '';
+//     console.log(`the displayValue is: ${calculatorState.displayValue}`)
+//   });
+// }
 
 // does addition operation
 function add(firstNum, secondNum) {
@@ -290,12 +319,12 @@ function operate(firstNum, arithmeticOperator, secondNum) {
 numButtons();
 passToDisplay(0);
 numButtonEventListener();
-arithmeticButtons();
-equalButton();
-clearButton();
+arithmeticButtons(operatorButtons);
+// equalButton();
+// clearButton();
 arithmeticButtonsEventListener();
-equalButtonEventListener();
-clearButtonEventListener();
+// equalButtonEventListener();
+// clearButtonEventListener();
 
 // pseudocode can be found here: https://jamboard.google.com/d/19jn6yRp9j1SMViSUJZOhzyi9M6nSDwYPEeXEj7kneQI/viewer?f=0
 
