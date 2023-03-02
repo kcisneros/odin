@@ -1,17 +1,13 @@
 // assignment: https://www.theodinproject.com/lessons/foundations-calculator
 
-let answer ='';
-
 const calcContainer = document.querySelector(".calculatorContainer");
 
 let firstNumberClicked = '';
-let displayValue = '';
 let addOperatorButton = '';
 let subtractOperatorButton = '';
 let multiplyOperatorButton = '';
 let divideOperatorButton = '';
 let equalSymbolClicked = ''
-let operatorClicked = '';
 let secondNumberClicked = '';
 
 let numberButton = '';
@@ -22,8 +18,14 @@ let multiplicationSymbol = '';
 let equalSymbol = '';
 let clearSymbol = '';
 
-let finalOperandValue = '';
-let secondFinalOperandValue = '';
+// object creation 
+let calculatorState = {
+  displayValue: '',
+  finalOperandValue: '',
+  secondFinalOperandValue: '',
+  operatorClicked: '',
+  answer: '',
+}
 
 const calcDisplay = document.createElement('div');
 calcDisplay.classList.add('calculatorDisplay');
@@ -46,23 +48,23 @@ function numButtonEventListener() {
   for (let i = 0; i < numberButton.length; i++) {
     // console.log(`numbner button is ${numberButton[i]}`);
     numberButton[i].addEventListener('click', () => {
-      if (operatorClicked != "" ) { // operator button has been clicked
+      if (calculatorState.operatorClicked != "" ) { // operator button has been clicked
         // second if? if secondNumberClicked is not empty then add to it, else make it just second number?
         secondNumberClicked = numberButton[i].textContent; 
-        secondFinalOperandValue += secondNumberClicked;
+        calculatorState.secondFinalOperandValue += secondNumberClicked;
         console.log(`the second number value clicked is: ${secondNumberClicked}`);
-        console.log(`the second operand value clicked is: ${secondFinalOperandValue}`); // shows double digit nums
+        console.log(`the second operand value clicked is: ${calculatorState.secondFinalOperandValue}`); // shows double digit nums
         // console.log(`second number clicked is: ${secondFinalOperandValue}`);
-        passToDisplay(secondFinalOperandValue); //commenting this line out seemed to clear out the display value issue i was seeing where it was adding the string data type numbers together (aka 21 instead of just 2 and just 1)
+        passToDisplay(calculatorState.secondFinalOperandValue); //commenting this line out seemed to clear out the display value issue i was seeing where it was adding the string data type numbers together (aka 21 instead of just 2 and just 1)
         // passToDisplay(secondNumberClicked);
       }
       else { // the operator button hasn't been clicked
         firstNumberClicked = numberButton[i].textContent;
-        finalOperandValue += firstNumberClicked;
+        calculatorState.finalOperandValue += firstNumberClicked;
         console.log(`the first number clicked is: ${firstNumberClicked}`);
-        console.log(`the first operand clicked is: ${finalOperandValue}`); // shows double digit nums
+        console.log(`the first operand clicked is: ${calculatorState.finalOperandValue}`); // shows double digit nums
         // console.log(`first number clicked is: ${finalOperandValue}`);
-        passToDisplay(finalOperandValue);
+        passToDisplay(calculatorState.finalOperandValue);
       }
   });
   }
@@ -70,9 +72,9 @@ function numButtonEventListener() {
 
 // this is the "display" for the calculator
 function passToDisplay(number) {
-  displayValue = calcDisplay.textContent = number;
-  console.log(`display value is: ${displayValue}`);
-  return displayValue;
+  calculatorState.displayValue = calcDisplay.textContent = number;
+  console.log(`display value is: ${calculatorState.displayValue}`);
+  return calculatorState.displayValue;
 }
 
 // creates arithmetic buttons (+, -, *, /)
@@ -107,48 +109,48 @@ function arithmeticButtonsEventListener() {
 
   addSymbol = document.getElementsByClassName('addButton');
   addSymbol[0].addEventListener('click', () => {
-    if (secondFinalOperandValue != '') {
-      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-      finalOperandValue = calcDisplay.textContent;
-      secondFinalOperandValue = '';
+    if (calculatorState.secondFinalOperandValue != '') {
+      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.secondFinalOperandValue = '';
     }
-    operatorClicked = addSymbol[0].textContent;
-    return operatorClicked;
+    calculatorState.operatorClicked = addSymbol[0].textContent;
+    return calculatorState.operatorClicked;
   });
 
   minusSymbol = document.getElementsByClassName('minusButton');
   minusSymbol[0].addEventListener('click', () => {
-    if (secondFinalOperandValue != '') {
-      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-      finalOperandValue = calcDisplay.textContent;
-      secondFinalOperandValue = '';
+    if (calculatorState.secondFinalOperandValue != '') {
+      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.secondFinalOperandValue = '';
     }
-    operatorClicked = minusSymbol[0].textContent;
-    return operatorClicked;  
+    calculatorState.operatorClicked = minusSymbol[0].textContent;
+    return calculatorState.operatorClicked;  
   });
 
   divisionSymbol = document.getElementsByClassName('divideButton');
   divisionSymbol[0].addEventListener('click', () => {
-    if (secondFinalOperandValue != '') {
-      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-      finalOperandValue = calcDisplay.textContent;
-      secondFinalOperandValue = '';
+    if (calculatorState.secondFinalOperandValue != '') {
+      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.secondFinalOperandValue = '';
     }
-    operatorClicked = divisionSymbol[0].textContent;
-    console.log(`the division operator button is: ${operatorClicked}`);
-    return operatorClicked;  
+    calculatorState.operatorClicked = divisionSymbol[0].textContent;
+    console.log(`the division operator button is: ${calculatorState.operatorClicked}`);
+    return calculatorState.operatorClicked;  
   });
 
   multiplicationSymbol = document.getElementsByClassName('multiplyButton');
   multiplicationSymbol[0].addEventListener('click', () => {
-    if (secondFinalOperandValue != '') {
-      operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-      finalOperandValue = calcDisplay.textContent;
-      secondFinalOperandValue = '';
+    if (calculatorState.secondFinalOperandValue != '') {
+      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.secondFinalOperandValue = '';
     }
-    operatorClicked = multiplicationSymbol[0].textContent;
-    console.log(`the multiply operator button is: ${operatorClicked}`);
-    return operatorClicked;
+    calculatorState.operatorClicked = multiplicationSymbol[0].textContent;
+    console.log(`the multiply operator button is: ${calculatorState.operatorClicked}`);
+    return calculatorState.operatorClicked;
   });
 }
 
@@ -167,10 +169,10 @@ function equalButtonEventListener() {
   equalSymbol[0].addEventListener('click', () => {
     equalSymbolClicked = equalSymbol[0].textContent;
     console.log(`the equal operator button is: ${equalSymbolClicked}`);
-    operate(finalOperandValue, operatorClicked, secondFinalOperandValue);
-    finalOperandValue = '';
-    operatorClicked = '';
-    secondFinalOperandValue = '';
+    operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+    calculatorState.finalOperandValue = '';
+    calculatorState.operatorClicked = '';
+    calculatorState.secondFinalOperandValue = '';
   });
 }
 
@@ -187,37 +189,38 @@ function clearButton() {
 function clearButtonEventListener() {
   clearSymbol = document.getElementsByClassName('clearButton');
   clearSymbol[0].addEventListener('click', () => {
-    displayValue = calcDisplay.textContent = 0;
-    finalOperandValue = '';
-    secondFinalOperandValue = '';
-    operatorClicked = '';
-    answer = '';
-    console.log(`the displayValue is: ${displayValue}`)
+    calcDisplay.textContent = 0;
+    calculatorState.displayValue = calcDisplay.textContent;
+    calculatorState.finalOperandValue = '';
+    calculatorState.secondFinalOperandValue = '';
+    calculatorState.operatorClicked  = '';
+    calculatorState.answer = '';
+    console.log(`the displayValue is: ${calculatorState.displayValue}`)
   });
 }
 
 // does addition operation
 function add(firstNum, secondNum) {
-  answer = Number(firstNum) + Number(secondNum); // not sure why I have to declare the number type here again..
-  answer = Math.round(answer * 100) / 100;
-  return answer;
+  calculatorState.answer = Number(firstNum) + Number(secondNum); // not sure why I have to declare the number type here again..
+  calculatorState.answer = Math.round(calculatorState.answer * 100) / 100;
+  return calculatorState.answer;
 };
 
 // does subtraction operation
 function subtract(firstNum, secondNum) {
-  answer = firstNum - secondNum;
-  answer = Math.round(answer * 100) / 100;
+  calculatorState.answer = firstNum - secondNum;
+  calculatorState.answer = Math.round(calculatorState.answer * 100) / 100;
   // console.log(`the subtraction answer is: ${answer}`);
-  return answer;
+  return calculatorState.answer;
 }
 
 // does multiplication operation
 function multiply(firstNum, secondNum) {
-  answer = firstNum * secondNum;
-  answer = Math.round(answer * 100) / 100;
+  calculatorState.answer = firstNum * secondNum;
+  calculatorState.answer = Math.round(calculatorState.answer * 100) / 100;
   // console.log(`the multiplication answer is: ${answer}`);
   // displayValue = answer;
-  return answer;
+  return calculatorState.answer;
 }
 
 // does division operation
@@ -225,73 +228,73 @@ function divide(firstNum, secondNum) {
   if (secondNum == 0 || firstNum == 0) {
     alert("Can't divide by zero, clown");
   }
-  answer = firstNum / secondNum;
-  answer = Math.round(answer * 100) / 100;
+  calculatorState.answer = firstNum / secondNum;
+  calculatorState.answer = Math.round(calculatorState.answer * 100) / 100;
   // console.log(`the division answer is: ${answer}`);
-  return answer;
+  return calculatorState.answer;
 }
 
 // operate function takes in three params and depending on the operator in the param
 // it sends it to one of the functions defined above
 function operate(firstNum, arithmeticOperator, secondNum) {
   if (arithmeticOperator === "*") {
-    if (answer == 0) {
+    if (calculatorState.answer == 0) {
       passToDisplay(multiply(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
-      firstNum = answer;
+      firstNum = calculatorState.answer;
       secondNum = 0;
-      secondNum = secondFinalOperandValue;
+      secondNum = calculatorState.secondFinalOperandValue;
       console.log(`firstnum is ${firstNum}`);
       console.log(`secondnum is ${secondNum}`);
       passToDisplay(multiply(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else if (arithmeticOperator === "/") {
-    if (answer == 0) {
+    if (calculatorState.answer == 0) {
       passToDisplay(divide(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
-      firstNum = answer;
+      firstNum = calculatorState.answer;
       secondNum = 0;
-      secondNum = secondFinalOperandValue;
+      secondNum = calculatorState.secondFinalOperandValue;
       console.log(`firstnum is ${firstNum}`);
       console.log(`secondnum is ${secondNum}`);
       passToDisplay(divide(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else if (arithmeticOperator === "+") {
-    if (answer == 0) {
+    if (calculatorState.answer == 0) {
       passToDisplay(add(firstNum, secondNum)); 
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`); 
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`); 
     }
     else {
-      firstNum = answer;
+      firstNum = calculatorState.answer;
       secondNum = 0;
-      secondNum = secondFinalOperandValue;
+      secondNum = calculatorState.secondFinalOperandValue;
       console.log(`firstnum is ${firstNum}`);
       console.log(`secondnum is ${secondNum}`);
       passToDisplay(add(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`); 
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`); 
     }
   }
   else if (arithmeticOperator === "-") {
-    if (answer == 0) {
+    if (calculatorState.answer == 0) {
       passToDisplay(subtract(firstNum, secondNum)); // have if/else? if dispalyvalue is nil do math else set to answer?  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
-      firstNum = answer;
+      firstNum = calculatorState.answer;
       secondNum = 0;
-      secondNum = secondFinalOperandValue;
+      secondNum = calculatorState.secondFinalOperandValue;
       console.log(`firstnum is ${firstNum}`);
       console.log(`secondnum is ${secondNum}`);
       passToDisplay(subtract(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${answer}`);
+      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else {
