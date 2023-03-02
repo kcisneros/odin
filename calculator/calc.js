@@ -3,20 +3,21 @@
 const calcContainer = document.querySelector(".calculatorContainer");
 
 let firstNumberClicked = '';
-let addOperatorButton = '';
-let subtractOperatorButton = '';
-let multiplyOperatorButton = '';
-let divideOperatorButton = '';
-let equalSymbolClicked = ''
 let secondNumberClicked = '';
 
 let numberButton = '';
-let addSymbol = '';
-let minusSymbol = '';
-let divisionSymbol = '';
-let multiplicationSymbol = '';
-let equalSymbol = '';
-let clearSymbol = '';
+
+let equalSymbolClicked = ''
+
+// object creation for operator buttons
+const operatorButtons = {
+  addSymbol: "+",
+  minusSymbol: "-",
+  divisionSymbol: "/",
+  multiplicationSymbol: "*",
+  equalSymbol: "=",
+  clearSymbol: "Clear",
+}
 
 // object creation 
 let calculatorState = {
@@ -82,25 +83,25 @@ function arithmeticButtons() {
   addSymbol = document.createElement('button');
   addSymbol.classList.add('arithmeticOperators');
   addSymbol.classList.add('addButton');
-  addSymbol.textContent = "+";
+  addSymbol.textContent = operatorButtons.addSymbol;
   calcContainer.appendChild(addSymbol);
 
   minusSymbol = document.createElement('button');
   minusSymbol.classList.add('arithmeticOperators');
   minusSymbol.classList.add('minusButton');
-  minusSymbol.textContent = "-";
+  minusSymbol.textContent = operatorButtons.minusSymbol;
   calcContainer.appendChild(minusSymbol);
 
   divisionSymbol = document.createElement('button');
   divisionSymbol.classList.add('arithmeticOperators');
   divisionSymbol.classList.add('divideButton');
-  divisionSymbol.textContent = "/";
+  divisionSymbol.textContent = operatorButtons.divisionSymbol;
   calcContainer.appendChild(divisionSymbol);
 
   multiplicationSymbol = document.createElement('button');
   multiplicationSymbol.classList.add('arithmeticOperators');
   multiplicationSymbol.classList.add('multiplyButton');
-  multiplicationSymbol.textContent = "*";
+  multiplicationSymbol.textContent = operatorButtons.multiplicationSymbol;
   calcContainer.appendChild(multiplicationSymbol);
 }
 
@@ -240,61 +241,45 @@ function operate(firstNum, arithmeticOperator, secondNum) {
   if (arithmeticOperator === "*") {
     if (calculatorState.answer == 0) {
       passToDisplay(multiply(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
       firstNum = calculatorState.answer;
       secondNum = 0;
       secondNum = calculatorState.secondFinalOperandValue;
-      console.log(`firstnum is ${firstNum}`);
-      console.log(`secondnum is ${secondNum}`);
       passToDisplay(multiply(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else if (arithmeticOperator === "/") {
     if (calculatorState.answer == 0) {
       passToDisplay(divide(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
       firstNum = calculatorState.answer;
       secondNum = 0;
       secondNum = calculatorState.secondFinalOperandValue;
-      console.log(`firstnum is ${firstNum}`);
-      console.log(`secondnum is ${secondNum}`);
       passToDisplay(divide(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else if (arithmeticOperator === "+") {
     if (calculatorState.answer == 0) {
       passToDisplay(add(firstNum, secondNum)); 
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`); 
     }
     else {
       firstNum = calculatorState.answer;
       secondNum = 0;
       secondNum = calculatorState.secondFinalOperandValue;
-      console.log(`firstnum is ${firstNum}`);
-      console.log(`secondnum is ${secondNum}`);
       passToDisplay(add(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`); 
     }
   }
   else if (arithmeticOperator === "-") {
     if (calculatorState.answer == 0) {
       passToDisplay(subtract(firstNum, secondNum)); // have if/else? if dispalyvalue is nil do math else set to answer?  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
     else {
       firstNum = calculatorState.answer;
       secondNum = 0;
       secondNum = calculatorState.secondFinalOperandValue;
-      console.log(`firstnum is ${firstNum}`);
-      console.log(`secondnum is ${secondNum}`);
       passToDisplay(subtract(firstNum, secondNum));  
-      console.log(`the math that's happening: ${firstNum} ${arithmeticOperator} ${secondNum}, the answer is ${calculatorState.answer}`);
     }
   }
   else {
