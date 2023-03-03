@@ -9,14 +9,13 @@ const multiplyChar = '*';
 
 // object creation 
 let calculatorState = {
-  displayValue: '',
   finalOperandValue: '',
   secondFinalOperandValue: '',
   operatorClicked: '',
   answer: '',
 }
 
-const calcDisplay = document.createElement('div');
+let calcDisplay = document.createElement('div');
 calcDisplay.classList.add('calculatorDisplay');
 calcContainer.appendChild(calcDisplay);
 
@@ -47,7 +46,7 @@ function addNumButtonEventListeners() {
 
 // this is the "display" for the calculator
 function passToDisplay(number) {
-  calculatorState.displayValue = calcDisplay.textContent = number;
+  calcDisplay.textContent = number;
 }
 
 
@@ -112,7 +111,6 @@ function addClearButtonEventListener() {
   clearSymbol = document.getElementsByClassName('clearSymbol');
   clearSymbol[0].addEventListener('click', () => {
     calcDisplay.textContent = 0;
-    calculatorState.displayValue = calcDisplay.textContent;
     calculatorState.finalOperandValue = '';
     calculatorState.secondFinalOperandValue = '';
     calculatorState.operatorClicked  = '';
