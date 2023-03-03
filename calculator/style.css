@@ -36,26 +36,26 @@ h1 {
   height: 50px;
 }
 
-.addButton {
+.addSymbol {
   font-weight: 500;
 }
 
-.minusButton {
+.minusSymbol {
   font-weight: 500;
 }
 
-.divideButton {
+.divisionSymbol {
   font-weight: 500;
 }
 
-.multiplyButton {
+.multiplicationSymbol {
   font-weight: 500;
 }
 
-.equalButton {
+.equalSymbol {
   font-weight: 500;
 }
 
-.clearButton {
+.clearSymbol {
   font-weight: 500;
 }
