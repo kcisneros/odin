@@ -81,7 +81,7 @@ function passToDisplay(number) {
 
 function arithmeticButtons() {
   symbols.forEach((symbolName) => {
-    arithmeticButton = document.createElement('button');
+    let arithmeticButton = document.createElement('button');
     arithmeticButton.classList.add('arithmeticOperators', symbolName);
     arithmeticButton.textContent = `${operatorButtons[symbolName]}`;
     calcContainer.appendChild(arithmeticButton);
