@@ -82,27 +82,27 @@ function passToDisplay(number) {
 // this function should take in a param for each operator button object?
 // and loop through creating the right button, class, and text content while appending to container
 function arithmeticButtons(operatorButtons) {
-  symbols.forEach((symbol) => {
-    button = document.createElement('button');
-    button.classList.add('arithmeticOperators', symbol);
-    // button.classList.add(symbol);
-    button.textContent = `${operatorButtons[symbol]}`;
-    calcContainer.appendChild(button);
+  symbols.forEach((symbolName) => {
+    arithmeticButton = document.createElement('button');
+    arithmeticButton.classList.add('arithmeticOperators', symbolName);
+    arithmeticButton.textContent = `${operatorButtons[symbolName]}`;
+    calcContainer.appendChild(arithmeticButton);
   })
 }
 
 // event listener (click) for arithmetic buttons
 function arithmeticButtonsEventListener() {
-  symbols.forEach((symbol) => {
-    let btnClick = document.getElementsByClassName(symbol);
-    btnClick[0].addEventListener('click', () => {
+  symbols.forEach((symbolName) => {
+    // addSymbol (symbol) = document.getElementsByClassName(addSymbol (symbol))
+    let buttons = document.getElementsByClassName(symbolName);
+    buttons[0].addEventListener('click', () => {
       if (calculatorState.secondFinalOperandValue != '') {
         operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
         calculatorState.finalOperandValue = calcDisplay.textContent;
         calculatorState.secondFinalOperandValue = '';
       }
-      console.log(`btnclick is: ${btnClick[0].textContent}. operator clicked state is: ${calculatorState.operatorClicked}`);
-      calculatorState.operatorClicked = btnClick[0].textContent;
+      console.log(`btnclick is: ${buttons[0].textContent}. operator clicked state is: ${calculatorState.operatorClicked}`);
+      calculatorState.operatorClicked = buttons[0].textContent;
       return calculatorState.operatorClicked;
     });
   })
