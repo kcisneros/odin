@@ -9,17 +9,6 @@ let numberButton = '';
 
 let equalSymbolClicked = ''
 
-// object creation for operator buttons
-const operatorButtons = {
-  addSymbol: "+",
-  minusSymbol: "-",
-  divisionSymbol: "/",
-  multiplicationSymbol: "*",
-}
-
-let symbols = Object.keys(operatorButtons);
-console.log(symbols);
-
 // object creation 
 let calculatorState = {
   displayValue: '',
@@ -71,28 +60,39 @@ function passToDisplay(number) {
   return calculatorState.displayValue;
 }
 
-function createArithmeticButtons() {
-  symbols.forEach((symbolName) => {
-    let arithmeticButton = document.createElement('button');
-    arithmeticButton.classList.add('arithmeticOperators', symbolName);
-    arithmeticButton.textContent = `${operatorButtons[symbolName]}`;
-    calcContainer.appendChild(arithmeticButton);
-  })
+
+function createArithmeticButton(symbolName, symbolChar) {
+  let arithmeticButton = document.createElement('button');
+  arithmeticButton.classList.add('arithmeticOperators', symbolName);
+  arithmeticButton.textContent = symbolChar;
+  calcContainer.appendChild(arithmeticButton);
 }
 
-function addArithmeticButtonsEventListeners() {
-  symbols.forEach((symbolName) => {
-    let buttons = document.getElementsByClassName(symbolName);
-    buttons[0].addEventListener('click', () => {
-      if (calculatorState.secondFinalOperandValue != '') {
-        operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-        calculatorState.finalOperandValue = calcDisplay.textContent;
-        calculatorState.secondFinalOperandValue = '';
-      }
-      calculatorState.operatorClicked = buttons[0].textContent;
-      return calculatorState.operatorClicked;
-    });
-  })
+function createArithmeticButtons() {
+  createArithmeticButton('addSymbol', '+');
+  createArithmeticButton('minusSymbol', '-');
+  createArithmeticButton('divisionSymbol', '/');
+  createArithmeticButton('multiplicationSymbol', '*');
+}
+
+function addArithmeticButtonEventListener(symbolName) {
+  let buttons = document.getElementsByClassName(symbolName);
+  buttons[0].addEventListener('click', () => {
+    if (calculatorState.secondFinalOperandValue != '') {
+      operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
+      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.secondFinalOperandValue = '';
+    }
+    calculatorState.operatorClicked = buttons[0].textContent;
+    return calculatorState.operatorClicked;
+  });
+}
+
+function addArithmeticButtonEventListeners() {
+  addArithmeticButtonEventListener('addSymbol');
+  addArithmeticButtonEventListener('minusSymbol');
+  addArithmeticButtonEventListener('divisionSymbol');
+  addArithmeticButtonEventListener('multiplicationSymbol');
 }
 
 function createEqualButton() {
@@ -224,7 +224,7 @@ addNumButtonEventListeners();
 createArithmeticButtons();
 createEqualButton();
 createClearButton();
-addArithmeticButtonsEventListeners();
+addArithmeticButtonEventListeners();
 addEqualButtonEventListener();
 addClearButtonEventListener();
 
