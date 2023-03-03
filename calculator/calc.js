@@ -9,6 +9,11 @@ let numberButton = '';
 
 let equalSymbolClicked = ''
 
+const addChar = '+';
+const minusChar = '=';
+const divideChar = '/';
+const multiplyChar = '*';
+
 // object creation 
 let calculatorState = {
   displayValue: '',
@@ -69,10 +74,10 @@ function createArithmeticButton(symbolName, symbolChar) {
 }
 
 function createArithmeticButtons() {
-  createArithmeticButton('addSymbol', '+');
-  createArithmeticButton('minusSymbol', '-');
-  createArithmeticButton('divisionSymbol', '/');
-  createArithmeticButton('multiplicationSymbol', '*');
+  createArithmeticButton('addSymbol', addChar);
+  createArithmeticButton('minusSymbol', minusChar);
+  createArithmeticButton('divisionSymbol', divideChar);
+  createArithmeticButton('multiplicationSymbol', multiplyChar);
 }
 
 function addArithmeticButtonEventListener(symbolName) {
@@ -169,7 +174,7 @@ function divide(firstNum, secondNum) {
 // operate function takes in three params and depending on the operator in the param
 // it sends it to one of the functions defined above
 function operate(firstNum, arithmeticOperator, secondNum) {
-  if (arithmeticOperator === "*") {
+  if (arithmeticOperator == multiplyChar) {
     if (calculatorState.answer == 0) {
       passToDisplay(multiply(firstNum, secondNum));  
     }
@@ -180,7 +185,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
       passToDisplay(multiply(firstNum, secondNum));  
     }
   }
-  else if (arithmeticOperator === "/") {
+  else if (arithmeticOperator == divideChar) {
     if (calculatorState.answer == 0) {
       passToDisplay(divide(firstNum, secondNum));  
     }
@@ -191,7 +196,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
       passToDisplay(divide(firstNum, secondNum));  
     }
   }
-  else if (arithmeticOperator === "+") {
+  else if (arithmeticOperator == addChar) {
     if (calculatorState.answer == 0) {
       passToDisplay(add(firstNum, secondNum)); 
     }
@@ -202,7 +207,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
       passToDisplay(add(firstNum, secondNum));  
     }
   }
-  else if (arithmeticOperator === "-") {
+  else if (arithmeticOperator == minusChar) {
     if (calculatorState.answer == 0) {
       passToDisplay(subtract(firstNum, secondNum)); // have if/else? if dispalyvalue is nil do math else set to answer?  
     }
