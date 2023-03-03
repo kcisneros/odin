@@ -10,7 +10,7 @@ let numberButton = '';
 let equalSymbolClicked = ''
 
 const addChar = '+';
-const minusChar = '=';
+const minusChar = '-';
 const divideChar = '/';
 const multiplyChar = '*';
 
@@ -43,15 +43,11 @@ function addNumButtonEventListeners() {
       if (calculatorState.operatorClicked != "" ) { 
         secondNumberClicked = numberButton[i].textContent; 
         calculatorState.secondFinalOperandValue += secondNumberClicked;
-        console.log(`the second number value clicked is: ${secondNumberClicked}`);
-        console.log(`the second operand value clicked is: ${calculatorState.secondFinalOperandValue}`); 
         passToDisplay(calculatorState.secondFinalOperandValue); 
       }
       else { 
         firstNumberClicked = numberButton[i].textContent;
         calculatorState.finalOperandValue += firstNumberClicked;
-        console.log(`the first number clicked is: ${firstNumberClicked}`);
-        console.log(`the first operand clicked is: ${calculatorState.finalOperandValue}`);
         passToDisplay(calculatorState.finalOperandValue);
       }
   });
@@ -61,7 +57,6 @@ function addNumButtonEventListeners() {
 // this is the "display" for the calculator
 function passToDisplay(number) {
   calculatorState.displayValue = calcDisplay.textContent = number;
-  console.log(`display value is: ${calculatorState.displayValue}`);
   return calculatorState.displayValue;
 }
 
@@ -111,7 +106,6 @@ function addEqualButtonEventListener() {
   equalSymbol = document.getElementsByClassName('equalSymbol');
   equalSymbol[0].addEventListener('click', () => {
     equalSymbolClicked = equalSymbol[0].textContent;
-    console.log(`the equal operator button is: ${equalSymbolClicked}`);
     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
     calculatorState.finalOperandValue = '';
     calculatorState.operatorClicked = '';
@@ -136,7 +130,6 @@ function addClearButtonEventListener() {
     calculatorState.secondFinalOperandValue = '';
     calculatorState.operatorClicked  = '';
     calculatorState.answer = '';
-    console.log(`the displayValue is: ${calculatorState.displayValue}`)
   });
 }
 
@@ -174,53 +167,28 @@ function divide(firstNum, secondNum) {
 // operate function takes in three params and depending on the operator in the param
 // it sends it to one of the functions defined above
 function operate(firstNum, arithmeticOperator, secondNum) {
+  let answer = 0;
+  if (calculatorState.answer != 0) {
+    firstNum = calculatorState.answer;
+    secondNum = 0;
+    secondNum = calculatorState.secondFinalOperandValue;
+  }
   if (arithmeticOperator == multiplyChar) {
-    if (calculatorState.answer == 0) {
-      passToDisplay(multiply(firstNum, secondNum));  
-    }
-    else {
-      firstNum = calculatorState.answer;
-      secondNum = 0;
-      secondNum = calculatorState.secondFinalOperandValue;
-      passToDisplay(multiply(firstNum, secondNum));  
-    }
+    answer = multiply(firstNum, secondNum);  
   }
   else if (arithmeticOperator == divideChar) {
-    if (calculatorState.answer == 0) {
-      passToDisplay(divide(firstNum, secondNum));  
-    }
-    else {
-      firstNum = calculatorState.answer;
-      secondNum = 0;
-      secondNum = calculatorState.secondFinalOperandValue;
-      passToDisplay(divide(firstNum, secondNum));  
-    }
+    answer = divide(firstNum, secondNum);  
   }
   else if (arithmeticOperator == addChar) {
-    if (calculatorState.answer == 0) {
-      passToDisplay(add(firstNum, secondNum)); 
-    }
-    else {
-      firstNum = calculatorState.answer;
-      secondNum = 0;
-      secondNum = calculatorState.secondFinalOperandValue;
-      passToDisplay(add(firstNum, secondNum));  
-    }
+    answer = add(firstNum, secondNum); 
   }
   else if (arithmeticOperator == minusChar) {
-    if (calculatorState.answer == 0) {
-      passToDisplay(subtract(firstNum, secondNum)); // have if/else? if dispalyvalue is nil do math else set to answer?  
-    }
-    else {
-      firstNum = calculatorState.answer;
-      secondNum = 0;
-      secondNum = calculatorState.secondFinalOperandValue;
-      passToDisplay(subtract(firstNum, secondNum));  
-    }
+    answer = subtract(firstNum, secondNum);  
   }
   else {
     alert("invalid operator. please enter arithmetic operator");
   }
+  passToDisplay(answer);
 }
 
 createNumButtons();
