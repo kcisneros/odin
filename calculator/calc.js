@@ -2,13 +2,6 @@
 
 const calcContainer = document.querySelector(".calculatorContainer");
 
-let firstNumberClicked = '';
-let secondNumberClicked = '';
-
-let numberButton = '';
-
-let equalSymbolClicked = ''
-
 const addChar = '+';
 const minusChar = '-';
 const divideChar = '/';
@@ -41,13 +34,11 @@ function addNumButtonEventListeners() {
   for (let i = 0; i < numberButton.length; i++) {
     numberButton[i].addEventListener('click', () => {
       if (calculatorState.operatorClicked != "" ) { 
-        secondNumberClicked = numberButton[i].textContent; 
-        calculatorState.secondFinalOperandValue += secondNumberClicked;
+        calculatorState.secondFinalOperandValue += numberButton[i].textContent; 
         passToDisplay(calculatorState.secondFinalOperandValue); 
       }
       else { 
-        firstNumberClicked = numberButton[i].textContent;
-        calculatorState.finalOperandValue += firstNumberClicked;
+        calculatorState.finalOperandValue += numberButton[i].textContent;
         passToDisplay(calculatorState.finalOperandValue);
       }
   });
@@ -103,7 +94,6 @@ function createEqualButton() {
 function addEqualButtonEventListener() {
   equalSymbol = document.getElementsByClassName('equalSymbol');
   equalSymbol[0].addEventListener('click', () => {
-    equalSymbolClicked = equalSymbol[0].textContent;
     operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
     calculatorState.finalOperandValue = '';
     calculatorState.operatorClicked = '';
