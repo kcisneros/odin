@@ -57,7 +57,6 @@ function addNumButtonEventListeners() {
 // this is the "display" for the calculator
 function passToDisplay(number) {
   calculatorState.displayValue = calcDisplay.textContent = number;
-  return calculatorState.displayValue;
 }
 
 
@@ -84,7 +83,6 @@ function addArithmeticButtonEventListener(symbolName) {
       calculatorState.secondFinalOperandValue = '';
     }
     calculatorState.operatorClicked = buttons[0].textContent;
-    return calculatorState.operatorClicked;
   });
 }
 
@@ -115,8 +113,7 @@ function addEqualButtonEventListener() {
 
 function createClearButton() {
   clearSymbol = document.createElement('button');
-  clearSymbol.classList.add('arithmeticOperators');
-  clearSymbol.classList.add('clearSymbol');
+  clearSymbol.classList.add('arithmeticOperators', 'clearSymbol');
   clearSymbol.textContent = 'Clear';
   calcContainer.appendChild(clearSymbol);
 }
