@@ -79,9 +79,7 @@ function passToDisplay(number) {
   return calculatorState.displayValue;
 }
 
-// this function should take in a param for each operator button object?
-// and loop through creating the right button, class, and text content while appending to container
-function arithmeticButtons(operatorButtons) {
+function arithmeticButtons() {
   symbols.forEach((symbolName) => {
     arithmeticButton = document.createElement('button');
     arithmeticButton.classList.add('arithmeticOperators', symbolName);
@@ -241,7 +239,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
 numButtons();
 passToDisplay(0);
 numButtonEventListener();
-arithmeticButtons(operatorButtons);
+arithmeticButtons();
 equalButton();
 clearButton();
 arithmeticButtonsEventListener();
