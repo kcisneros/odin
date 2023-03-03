@@ -15,9 +15,22 @@ let calculatorState = {
   answer: '',
 }
 
-let calcDisplay = document.createElement('div');
-calcDisplay.classList.add('calculatorDisplay');
-calcContainer.appendChild(calcDisplay);
+function createCalculatorDisplay() {
+  let calcDisplay = document.createElement('div');
+  calcDisplay.setAttribute('id', 'calculatorDisplay');
+  calcDisplay.classList.add('calculatorDisplay');
+  calcContainer.appendChild(calcDisplay);  
+  return calcDisplay;
+}
+
+function displayValue() {
+  return document.getElementById('calculatorDisplay').textContent;
+}
+
+// this is the "display" for the calculator
+function passToDisplay(number) {
+  document.getElementById('calculatorDisplay').textContent = number;
+}
 
 function createNumButtons() {
   for (i = 0; i < 10; i++) {
@@ -44,11 +57,6 @@ function addNumButtonEventListeners() {
   }
 }
 
-// this is the "display" for the calculator
-function passToDisplay(number) {
-  calcDisplay.textContent = number;
-}
-
 
 function createArithmeticButton(symbolName, symbolChar) {
   let arithmeticButton = document.createElement('button');
@@ -69,7 +77,7 @@ function addArithmeticButtonEventListener(symbolName) {
   buttons[0].addEventListener('click', () => {
     if (calculatorState.secondFinalOperandValue != '') {
       operate(calculatorState.finalOperandValue, calculatorState.operatorClicked, calculatorState.secondFinalOperandValue);
-      calculatorState.finalOperandValue = calcDisplay.textContent;
+      calculatorState.finalOperandValue = displayValue();
       calculatorState.secondFinalOperandValue = '';
     }
     calculatorState.operatorClicked = buttons[0].textContent;
@@ -110,7 +118,7 @@ function createClearButton() {
 function addClearButtonEventListener() {
   clearSymbol = document.getElementsByClassName('clearSymbol');
   clearSymbol[0].addEventListener('click', () => {
-    calcDisplay.textContent = 0;
+    passToDisplay(0);
     calculatorState.finalOperandValue = '';
     calculatorState.secondFinalOperandValue = '';
     calculatorState.operatorClicked  = '';
@@ -176,6 +184,7 @@ function operate(firstNum, arithmeticOperator, secondNum) {
   passToDisplay(answer);
 }
 
+createCalculatorDisplay();
 createNumButtons();
 passToDisplay(0);
 addNumButtonEventListeners();
