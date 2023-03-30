@@ -15,8 +15,6 @@
 
 # 3. return the final sorted array?
 
-# bubble_sort([4,3,78,2,0,2])
-
 def bubble_sort(array)
   sorted_array = []
   array.each_with_index do |number, index|
@@ -24,10 +22,14 @@ def bubble_sort(array)
     p "index is: #{index}"
     p "next number is: #{array[index+1]}"
     if number > array[index+1]
+      sorted_array.push(array[index+1], number)
+      puts "sorted_array is: #{sorted_array}"
       puts "#{number} is greater than #{array[index+1]}, shift it!"
     else
       puts "#{number} is not greater than #{array[index+1]}, don't shift it!"
     end
   end
-  # return sorted_array (??)
+  # return sorted_array
 end
+
+bubble_sort([4,3,78,2,0,2])
