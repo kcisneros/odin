@@ -34,14 +34,14 @@ class Board
   end
 
   def board_data
-    puts 'X or O?'
-    char = gets.chomp
+    # puts 'X or O?'
+    # char = gets.chomp
 
-    while char != 'X' && char != 'O'
-      puts 'Please enter X or O'
-      char = gets.chomp
-      break if char == 'X' || char == 'O'
-    end
+    # while char != 'X' && char != 'O'
+    #   puts 'Please enter X or O'
+    #   char = gets.chomp
+    #   break if char == 'X' || char == 'O'
+    # end
 
     puts 'Which row do you want to put it in? 1, 2, or 3'
     row_location = gets.chomp
@@ -57,13 +57,13 @@ class Board
     puts 'Which column do you want to put it in? 0, 1, or 2'
     location = gets.chomp.to_i
 
-    board[location] = char
+    board[location] = @char
     @current_display_board = display_board
     current_display_board
   end
 
-  def display_current_board
-    puts "Current display board is: #{display_board}"
-  end
+  # def display_current_board
+  #   puts "Current display board is: #{display_board}"
+  # end
 end
 
