@@ -14,56 +14,73 @@
 # This class creates a board to display
 class Board
 
-  attr_accessor :board_row_one, :board_row_two, :board_row_three, :current_display_board
+  attr_accessor :board_row_one, :board_row_two, :board_row_three, :current_display_board, :board, :location
 
   def initialize
-    @board_row_one = ['', '', '']
-    @board_row_two = ['', '', '']
-    @board_row_three = ['', '', '']
+    @board = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    # @board_row_one = ['', '', '']
+    # @board_row_two = ['', '', '']
+    # @board_row_three = ['', '', '']
   end
 
   def display_board
+    # puts " #{board[0]} | #{board[1]} | #{board[2]}"
+    # puts '-----------'
+    # puts " #{board[3]} | #{board[4]} | #{board[5]}"
+    # puts '-----------'
+    # puts " #{board[6]} | #{board[7]} | #{board[8]}"
+
     puts "\n
-    column: 0 | 1 | 2\n
-    row: 1  #{board_row_one[0]} | #{board_row_one[1]} | #{board_row_one[2]}
-            ----------
-    row: 2  #{board_row_two[0]} | #{board_row_two[1]} | #{board_row_two[2]}
-            ----------
-    row: 3  #{board_row_three[0]} | #{board_row_three[1]} | #{board_row_three[2]}
+     #{board[0]} | #{board[1]} | #{board[2]}
+     ----------
+     #{board[3]} | #{board[4]} | #{board[5]}
+     ----------
+     #{board[6]} | #{board[7]} | #{board[8]}
     "
+    # puts "\n
+    # column: 0 | 1 | 2\n
+    # row: 1  #{board_row_one[0]} | #{board_row_one[1]} | #{board_row_one[2]}
+    #         ----------
+    # row: 2  #{board_row_two[0]} | #{board_row_two[1]} | #{board_row_two[2]}
+    #         ----------
+    # row: 3  #{board_row_three[0]} | #{board_row_three[1]} | #{board_row_three[2]}
+    # "
   end
 
-  def board_data
-    # puts 'X or O?'
-    # char = gets.chomp
+  def ask_for_placement
+    puts 'Which spot do you want to take? (0, 1, 2, 3...) '
+    @spot = gets.chomp.to_i
+  end
 
-    # while char != 'X' && char != 'O'
-    #   puts 'Please enter X or O'
-    #   char = gets.chomp
-    #   break if char == 'X' || char == 'O'
-    # end
+  def board_update(marker)
+    ask_for_placement
 
-    puts 'Which row do you want to put it in? 1, 2, or 3'
-    row_location = gets.chomp
-    case row_location
-    when '1'
-      board = board_row_one
-    when '2'
-      board = board_row_two
-    when '3'
-      board = board_row_three
+    if @board[@spot].is_a? Integer
+      # puts "it's an int"
+      @board[@spot] = marker
+    elsif @board[@spot].is_a? String
+      puts 'Already taken! Please pick another spot'
+      ask_for_placement
+      @board[@spot] = marker
     end
 
-    puts 'Which column do you want to put it in? 0, 1, or 2'
-    location = gets.chomp.to_i
-
-    board[location] = @char
+    # @board[@spot] = marker
     @current_display_board = display_board
     current_display_board
+
+    # if @board[@spot].include?("X") || @board[@spot].include?("O")
+    #   puts "Pick another spot"
+    #   ask_for_placement
+    #   @board[@spot] = marker
+    #   display_board
+    # #   ask_for_row_placement
+    # #   ask_for_column_placement
+    # end
   end
 
-  # def display_current_board
-  #   puts "Current display board is: #{display_board}"
+  # def winner
+  #   if @board_row_one[0] && @board_row_one[1] && @board_row_one[2] == 'X' || @board_row_one[0] && @board_row_one[1] && @board_row_one[2] == 'O'
+  #     puts 'Winner!'
+  #   end
   # end
 end
-
