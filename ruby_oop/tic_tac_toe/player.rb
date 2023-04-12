@@ -8,8 +8,4 @@ class Player
     @name = name
     @marker = marker
   end
-
-  def to_s
-    "Player is: #{@name}, marker is: #{@marker}"
-  end
 end
