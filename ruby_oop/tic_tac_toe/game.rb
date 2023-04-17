@@ -25,22 +25,25 @@ class Game
     board.display_board
   end
 
-  def swap_players
+  def play
     turn_number = 1
     until game_over?
-      if turn_number.odd?
-        puts "#{player1.name.capitalize} is selecting a spot..."
-        @board.board_update(player1.marker)
-        turn_number += 1
-      else
-        puts "#{player2.name.capitalize} is selecting a spot..."
-        @board.board_update(player2.marker)
-        turn_number += 1
-      end
+      swap_players(turn_number)
+      turn_number += 1
     end
   end
 
   private
+
+  def swap_players(turn_number)
+    if turn_number.odd?
+      puts "#{player1.name.capitalize} is selecting a spot..."
+      @board.board_update(player1.marker)
+    else
+      puts "#{player2.name.capitalize} is selecting a spot..."
+      @board.board_update(player2.marker)
+    end
+  end
 
   def create_player(ordinal_prompt: 'first')
     puts "Enter #{ordinal_prompt} player name: "
@@ -54,13 +57,12 @@ class Game
     Player.new(player_name, marker)
   end
 
-  # I think this method can be private, but not sure why just yet..
   def game_over?
     @game_over = false
     if win?
       @game_over = true
       puts 'Game over!'
-    elsif @board.board.all? { |pos| pos.is_a? String }
+    elsif Board::BOARD.all? { |pos| pos.is_a? String }
       puts 'Tie!'
       @game_over = true
     else
@@ -71,11 +73,11 @@ class Game
 
   def win?
     WINNING_VECTORS.any? do |v|
-      @board.board[v[0]] == @board.board[v[1]] && @board.board[v[0]] == @board.board[v[2]] && !@board.board[v[0]].nil?
+      Board::BOARD[v[0]] == Board::BOARD[v[1]] && Board::BOARD[v[0]] == Board::BOARD[v[2]] && !Board::BOARD[v[0]].nil?
     end
   end
 end
 
 puts "Welcome to tic-tac-toe!\n\n"
 game = Game.new
-game.swap_players
+game.play

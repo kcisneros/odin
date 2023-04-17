@@ -11,36 +11,32 @@
 
 # This class creates a board to display
 class Board
-
   attr_accessor :current_display_board, :board
 
-  def initialize
-    @board = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    # @board = ["X", 1, 2, "X", 4, "X", "X", 7, "X"]
-  end
+  BOARD = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
   def display_board
     puts "\n
-     #{board[0]} | #{board[1]} | #{board[2]}
+     #{BOARD[0]} | #{BOARD[1]} | #{BOARD[2]}
      ----------
-     #{board[3]} | #{board[4]} | #{board[5]}
+     #{BOARD[3]} | #{BOARD[4]} | #{BOARD[5]}
      ----------
-     #{board[6]} | #{board[7]} | #{board[8]}
+     #{BOARD[6]} | #{BOARD[7]} | #{BOARD[8]}
     "
   end
 
   def board_update(marker)
     ask_for_placement
 
-    case @board[@spot]
+    case BOARD[@spot]
     when String
       puts 'Already taken! Please pick another spot.'
       ask_for_placement
-      @board[@spot] = marker
+      BOARD[@spot] = marker
     when Integer
-      @board[@spot] = marker
+      BOARD[@spot] = marker
     else
-      raise "Invalid spot: #{@board[@spot]}"
+      raise "Invalid spot: #{BOARD[@spot]}"
     end
 
     @current_display_board = display_board
@@ -49,14 +45,13 @@ class Board
 
   private
 
-  # I think this method can be private, but not sure why.. 
   def ask_for_placement
     puts 'Which spot do you want to take? (0, 1, 2, 3...) '
     @spot = gets.chomp.to_i
-    while @spot > board.length
+    while @spot > BOARD.length
       puts 'Not a valid spot, please enter 0-9: '
       @spot = gets.chomp.to_i
-      break if @spot <= board.length
+      break if @spot <= BOARD.length
     end
   end
 end
