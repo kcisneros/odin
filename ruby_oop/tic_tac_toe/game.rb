@@ -7,6 +7,17 @@ require './board'
 class Game
   attr_accessor :board, :player1, :player2
 
+  WINNING_VECTORS = [
+    [0, 1, 2], # first row horizontal
+    [0, 3, 6], # first row vertical
+    [0, 4, 8], # top left diagonal
+    [3, 4, 5], # second row horizontal
+    [6, 7, 8], # third row horizontal
+    [1, 4, 7], # second row vertical
+    [2, 5, 8], # third row vertical
+    [2, 4, 6] # top right diagonal
+  ].freeze
+
   def initialize
     @player1 = create_player
     @player2 = create_player(ordinal_prompt: 'second')
@@ -45,33 +56,23 @@ class Game
 
   # I think this method can be private, but not sure why just yet..
   def game_over?
-    game_over = false
-    # tried having this ugly long if in a constant, but couldn't make it work.. 
-    if (@board.board[0] == 'X' && @board.board[1] == 'X' && @board.board[2] == 'X') || # first row horizontal
-       (@board.board[0] == 'O' && @board.board[1] == 'O' && @board.board[2] == 'O') || # first row horizontal
-       (@board.board[0] == 'X' && @board.board[3] == 'X' && @board.board[6] == 'X') || # first row vertical
-       (@board.board[0] == 'O' && @board.board[3] == 'O' && @board.board[6] == 'O') || # first row vertical
-       (@board.board[0] == 'X' && @board.board[4] == 'X' && @board.board[8] == 'X') || # top left diagonal
-       (@board.board[0] == 'O' && @board.board[4] == 'O' && @board.board[8] == 'O') || # top left diagonal
-       (@board.board[3] == 'X' && @board.board[4] == 'X' && @board.board[5] == 'X') || # second row horizontal
-       (@board.board[3] == 'O' && @board.board[4] == 'O' && @board.board[5] == 'O') || # second row horizontal
-       (@board.board[6] == 'X' && @board.board[7] == 'X' && @board.board[8] == 'X') || # third row horizontal
-       (@board.board[6] == 'O' && @board.board[7] == 'O' && @board.board[8] == 'O') || # third row horizontal
-       (@board.board[1] == 'X' && @board.board[4] == 'X' && @board.board[7] == 'X') || # second row vertical
-       (@board.board[1] == 'O' && @board.board[4] == 'O' && @board.board[7] == 'O') || # second row vertical
-       (@board.board[2] == 'X' && @board.board[5] == 'X' && @board.board[8] == 'X') || # third row vertical
-       (@board.board[2] == 'O' && @board.board[5] == 'O' && @board.board[8] == 'O') || # third row vertical
-       (@board.board[2] == 'X' && @board.board[4] == 'X' && @board.board[6] == 'X') || # top right diagonal
-       (@board.board[2] == 'O' && @board.board[4] == 'O' && @board.board[6] == 'O') # top right diagonal
+    @game_over = false
+    if win?
+      @game_over = true
       puts 'Game over!'
-      game_over = true
     elsif @board.board.all? { |pos| pos.is_a? String }
       puts 'Tie!'
-      game_over = true
+      @game_over = true
     else
-      game_over = false
+      @game_over = false
     end
-    game_over
+    @game_over
+  end
+
+  def win?
+    WINNING_VECTORS.any? do |v|
+      @board.board[v[0]] == @board.board[v[1]] && @board.board[v[0]] == @board.board[v[2]] && !@board.board[v[0]].nil?
+    end
   end
 end
 
