@@ -32,21 +32,15 @@ class Board
   def board_update(marker)
     ask_for_placement
 
-    # while @board[@spot].is_a? String
-    #   puts 'Already taken! Please pick another spot'
-    #   ask_for_placement
-    #   @board[@spot] = marker
-    #   break if @board[@spot].is_a? Integer
-    # end
-    # @board[@spot] = marker
-
-    if @board[@spot].is_a? Integer
-      # puts "it's an int"
-      @board[@spot] = marker
-    elsif @board[@spot].is_a? String
-      puts 'Already taken! Please pick another spot'
+    case @board[@spot]
+    when String
+      puts 'Already taken! Please pick another spot.'
       ask_for_placement
       @board[@spot] = marker
+    when Integer
+      @board[@spot] = marker
+    else
+      raise "Invalid spot: #{@board[@spot]}"
     end
 
     @current_display_board = display_board
