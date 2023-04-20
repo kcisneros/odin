@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require './computer_player'
+require './human_player'
+
 # class to play the mastermind game
 class Game
   attr_accessor :human_player, :computer_player
@@ -15,13 +18,14 @@ class Game
   def create_computer_selection
     puts "Computer is selecting random colors...\n\n"
     @computer_choice = AVAILABLE_COLORS.sample(4)
+    ComputerPlayer.new(@computer_choice)
   end
 
   def create_human_player_selection
     @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
                     pick_color(color_choice_selection), pick_color(color_choice_selection)]
-    puts "You guessed: #{@guess_array}"
-    @guess_array
+    puts "\nYou guessed: #{@guess_array}"
+    HumanPlayer.new(@guess_array)
   end
 
   def color_index_match
@@ -32,7 +36,7 @@ class Game
 
   def color_found_in_array
     @guess_array.each_with_index do |color, idx|
-      puts "Color #{color} is a part of the secret code." if @computer_choice.include?(color) 
+      puts "Color #{color} is a part of the secret code." if @computer_choice.include?(color)
     end
   end
 
@@ -52,7 +56,7 @@ class Game
   def game_over?
     @game_over = false
     if win?
-      puts 'Game over!'
+      puts "Game over! Exact match. Computer picked #{@computer_choice}."
       @game_over = true
     else
       puts 'Try again.'
@@ -61,10 +65,7 @@ class Game
   end
 
   def win?
-    if @guess_array == @computer_choice
-      puts 'Exact match!'
-      true
-    end
+    return true if @guess_array == @computer_choice
   end
 
   def pick_color(color)
@@ -79,7 +80,8 @@ class Game
   end
 
   def color_choice_selection
-    puts "Enter your color choice.
+    puts "\nEnter your color choice. Pick one color (r for example) and then
+    press enter. Do this four times to generate your four color code choice.\n
     r for 🔴, b for 🔵, g for 🟢,
     y for 🟡, br for 🟤, p for 🟣"
     gets.chomp
