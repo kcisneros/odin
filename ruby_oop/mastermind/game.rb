@@ -24,6 +24,11 @@ class Game
   def create_human_player_selection
     @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
                     pick_color(color_choice_selection), pick_color(color_choice_selection)]
+    if @guess_array.include?(nil) || @guess_array.uniq.length != 4
+      puts 'Duplicate entries or empty entries not allowed. Enter a new selection again.'
+      @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
+                      pick_color(color_choice_selection), pick_color(color_choice_selection)]
+    end
     puts "\nYou guessed: #{@guess_array}"
     HumanPlayer.new(@guess_array)
   end
