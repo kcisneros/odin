@@ -8,20 +8,33 @@ class Game
   attr_accessor :human_player, :computer_player
 
   AVAILABLE_COLORS = ['🟤', '🔴', '🔵', '🟢', '🟡', '🟣'].freeze
-  @computer_choice = []
+  @secret_code = []
 
   def initialize
-    @computer_player = create_computer_selection
-    @human_player = create_human_player_selection
+    @human_player = codebreaker_or_codemaker
+    @computer_player = !@human_player
   end
 
-  def create_computer_selection
+  def computer_codemaker
     puts "Computer is selecting random colors...\n\n"
-    @computer_choice = AVAILABLE_COLORS.sample(4)
-    ComputerPlayer.new(@computer_choice)
+    @secret_code = AVAILABLE_COLORS.sample(4)
+    ComputerPlayer.new(@secret_code)
   end
 
-  def create_human_player_selection
+  def computer_codebreaker
+    puts "Computer is selecting random colors...\n\n"
+    @guess_array = AVAILABLE_COLORS.sample(4)
+    ComputerPlayer.new(@guess_array)
+  end
+
+  def human_codemaker
+    puts 'Enter a code to be broken: '
+    @secret_code = [pick_color(color_choice_selection), pick_color(color_choice_selection),
+      pick_color(color_choice_selection), pick_color(color_choice_selection)]
+      HumanPlayer.new(@secret_code)
+  end
+
+  def human_codebreaker
     @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
                     pick_color(color_choice_selection), pick_color(color_choice_selection)]
     if @guess_array.include?(nil) || @guess_array.uniq.length != 4
@@ -33,26 +46,50 @@ class Game
     HumanPlayer.new(@guess_array)
   end
 
+  def codebreaker_or_codemaker
+    puts 'Do you want to be the codemaker or the codebreaker? Enter 1 for codemaker, 2 for codebreaker: '
+    choice = gets.chomp.to_i
+    case choice
+    when 1
+      puts 'You are the codemaker.'
+      true
+    when 2
+      puts 'You are the codebreaker.'
+      false
+    end
+  end
+
   def color_index_match
     @guess_array.each_with_index do |color, idx|
-      puts "#{color} is in the right spot!" if color.match(@computer_choice[idx])
+      puts "#{color} is in the right spot!" if color.match(@secret_code[idx])
     end
   end
 
   def color_found_in_array
     @guess_array.each_with_index do |color, idx|
-      puts "Color #{color} is a part of the secret code." if @computer_choice.include?(color)
+      puts "Color #{color} is a part of the secret code." if @secret_code.include?(color)
     end
   end
 
   # keep playing until there's a match OR 12 turns happen
   def play
-    turn_number = 1
-    until game_over? || turn_number == 12
-      color_index_match
-      color_found_in_array
-      create_human_player_selection
-      turn_number += 1
+    turn_number = 0
+    if @human_player
+      human_codemaker
+      until game_over? || turn_number == 12
+        computer_codebreaker
+        color_index_match
+        color_found_in_array
+        turn_number += 1
+      end
+    else
+      computer_codemaker
+      until game_over? || turn_number == 12
+        human_codebreaker
+        color_index_match
+        color_found_in_array
+        turn_number += 1
+      end
     end
   end
 
@@ -61,7 +98,7 @@ class Game
   def game_over?
     @game_over = false
     if win?
-      puts "Game over! Exact match. Computer picked #{@computer_choice}."
+      puts "Game over! Exact match. The code was: #{@secret_code}."
       @game_over = true
     else
       puts 'Try again.'
@@ -70,7 +107,7 @@ class Game
   end
 
   def win?
-    return true if @guess_array == @computer_choice
+    return true if @guess_array == @secret_code
   end
 
   def pick_color(color)
