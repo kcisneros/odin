@@ -1,60 +1,60 @@
 # frozen_string_literal: true
 
-require './computer_player'
-require './human_player'
+require './display_text'
 
 # class to play the mastermind game
 class Game
-  attr_accessor :human_player, :computer_player
+  include DisplayableText
 
   AVAILABLE_COLORS = ['🟤', '🔴', '🔵', '🟢', '🟡', '🟣'].freeze
   @secret_code = []
 
   def initialize
-    @human_player = codebreaker_or_codemaker
-    @computer_player = !@human_player
+    @player_codebreaker = codebreaker_or_codemaker?
   end
 
   def computer_codemaker
-    puts "Computer is selecting random colors...\n\n"
+    display_computer_text
     @secret_code = AVAILABLE_COLORS.sample(4)
-    ComputerPlayer.new(@secret_code)
   end
 
   def computer_codebreaker
-    puts "Computer is selecting random colors...\n\n"
+    display_computer_text
     @guess_array = AVAILABLE_COLORS.sample(4)
-    ComputerPlayer.new(@guess_array)
   end
 
   def human_codemaker
-    puts 'Enter a code to be broken: '
-    @secret_code = [pick_color(color_choice_selection), pick_color(color_choice_selection),
-      pick_color(color_choice_selection), pick_color(color_choice_selection)]
-      HumanPlayer.new(@secret_code)
+    display_human_codebreaker_text
+    @secret_code = set_code_array
   end
 
   def human_codebreaker
-    @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
-                    pick_color(color_choice_selection), pick_color(color_choice_selection)]
+    @guess_array = set_code_array
     if @guess_array.include?(nil) || @guess_array.uniq.length != 4
-      puts 'Duplicate entries or empty entries not allowed. Enter a new selection again.'
-      @guess_array = [pick_color(color_choice_selection), pick_color(color_choice_selection),
-                      pick_color(color_choice_selection), pick_color(color_choice_selection)]
+      display_human_codebreaker_display_dupe_text
+      @guess_array = set_code_array
     end
     puts "\nYou guessed: #{@guess_array}"
-    HumanPlayer.new(@guess_array)
+    @guess_array
   end
 
-  def codebreaker_or_codemaker
-    puts 'Do you want to be the codemaker or the codebreaker? Enter 1 for codemaker, 2 for codebreaker: '
+  def set_code_array
+    [pick_color(color_choice_selection), pick_color(color_choice_selection),
+     pick_color(color_choice_selection), pick_color(color_choice_selection)]
+  end
+
+  def codebreaker_or_codemaker?
+    display_initial_prompt_text
     choice = gets.chomp.to_i
     case choice
     when 1
-      puts 'You are the codemaker.'
+      display_codemaker_confirmation_text
       true
     when 2
-      puts 'You are the codebreaker.'
+      display_codebreaker_confirmation_text
+      false
+    else
+      display_invalid_selection_option_text
       false
     end
   end
@@ -74,7 +74,7 @@ class Game
   # keep playing until there's a match OR 12 turns happen
   def play
     turn_number = 0
-    if @human_player
+    if @player_codebreaker
       human_codemaker
       until game_over? || turn_number == 12
         computer_codebreaker
@@ -122,10 +122,7 @@ class Game
   end
 
   def color_choice_selection
-    puts "\nEnter your color choice. Pick one color (r for example) and then
-    press enter. Do this four times to generate your four color code choice.\n
-    r for 🔴, b for 🔵, g for 🟢,
-    y for 🟡, br for 🟤, p for 🟣"
+    display_color_choice_prompt
     gets.chomp
   end
 end
