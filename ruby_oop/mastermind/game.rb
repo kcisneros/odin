@@ -64,30 +64,30 @@ class Game
   end
 
   def color_choice_selection
-    puts display_color_choice_prompt
+    puts color_choice_prompt
     gets.chomp
   end
 
   def computer_codemaker
-    puts display_computer_text
+    puts computer_text
     @secret_code = AVAILABLE_COLORS.sample(4)
   end
 
   def computer_codebreaker
-    puts display_computer_text
+    puts computer_text
     @guess_array = AVAILABLE_COLORS.sample(4)
   end
 
   def human_codemaker
-    puts display_codemaker_confirmation_text
+    puts codemaker_confirmation_text
     @secret_code = set_code_array
   end
 
   def human_codebreaker
-    puts display_codebreaker_confirmation_text
+    puts codebreaker_confirmation_text
     @guess_array = set_code_array
     if @guess_array.include?(nil) || @guess_array.uniq.length != 4
-      puts display_human_codebreaker_display_dupe_text
+      puts human_codebreaker_dupe_text
       @guess_array = set_code_array
     end
     puts "\nYou guessed: #{@guess_array}"
@@ -101,19 +101,19 @@ class Game
 
   def color_found_in_array
     @guess_array.each do |color|
-      puts "Color #{color} is a part of the secret code." if @secret_code.include?(color)
+      puts color_is_part_of_secret_code_text(color) if @secret_code.include?(color)
     end
   end
 
   def color_index_match
     @guess_array.each_with_index do |color, idx|
-      puts "#{color} is in the right spot!" if color.match(@secret_code[idx])
+      puts color_is_in_the_right_spot(color) if color.match(@secret_code[idx])
     end
   end
 
   def codebreaker_or_codemaker?
     # true means player is codemaker, false means codebreaker
-    puts display_initial_prompt_text
+    puts initial_prompt_text
     choice = gets.chomp.to_i
     case choice
     when 1
@@ -121,7 +121,7 @@ class Game
     when 2
       false
     else
-      puts display_invalid_selection_option_text
+      puts invalid_selection_option_text
     end
   end
 end
