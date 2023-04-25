@@ -9,26 +9,26 @@ class Game
   AVAILABLE_COLORS = ['🟤', '🔴', '🔵', '🟢', '🟡', '🟣'].freeze
 
   def initialize
-    @player_codebreaker = codebreaker_or_codemaker?
+    @player_codebreaker = codebreaker?
   end
 
   # keep playing until there's a match OR 12 turns happen
   def play
     turn_number = 0
     if @player_codebreaker
-      human_codemaker
-      until game_over? || turn_number == 12
+      play_human_codemaker
+      until game_over?(turn_number)
         computer_codebreaker
-        color_index_match
-        color_found_in_array
+        check_for_color_index_match
+        check_for_color_found_in_array
         turn_number += 1
       end
     else
       computer_codemaker
-      until game_over? || turn_number == 12
+      until game_over?(turn_number)
         human_codebreaker
-        color_index_match
-        color_found_in_array
+        check_for_color_index_match
+        check_for_color_found_in_array
         turn_number += 1
         puts 'Try again.'
       end
@@ -37,7 +37,9 @@ class Game
 
   private
 
-  def game_over?
+  def game_over?(turn_number)
+    return true if turn_number == 12
+
     @game_over = false
     if win?
       puts "Game over! Exact match. The code was: #{@secret_code}."
@@ -78,7 +80,7 @@ class Game
     @guess_array = AVAILABLE_COLORS.sample(4)
   end
 
-  def human_codemaker
+  def play_human_codemaker
     puts codemaker_confirmation_text
     @secret_code = set_code_array
   end
@@ -99,20 +101,20 @@ class Game
      pick_color(color_choice_selection), pick_color(color_choice_selection)]
   end
 
-  def color_found_in_array
+  def check_for_color_found_in_array
     @guess_array.each do |color|
       puts color_is_part_of_secret_code_text(color) if @secret_code.include?(color)
     end
   end
 
-  def color_index_match
+  def check_for_color_index_match
     @guess_array.each_with_index do |color, idx|
       puts color_is_in_the_right_spot(color) if color.match(@secret_code[idx])
     end
   end
 
-  def codebreaker_or_codemaker?
-    # true means player is codemaker, false means codebreaker
+  # true means player is codemaker, false means codebreaker
+  def codebreaker?
     puts initial_prompt_text
     choice = gets.chomp.to_i
     case choice
