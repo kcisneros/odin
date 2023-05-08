@@ -6,6 +6,8 @@ module DisplayableText
   GAME_OVER_TEXT = 'Game over! You guessed the word 🎉'
   NO_MATCH_TEXT = 'Letter is not in the hangman word!'
   WELCOME_TEXT = "Let's play Hangman!\n\n"
+  GUESS_THE_WORD = 'Would you like to guess the word? Y/N '
+  ENTER_THE_WORD = 'Please enter your guess: '
 
   def guessed_letters(guessed_letters)
     puts "\n\nSo far you have guessed: #{guessed_letters}"

@@ -58,7 +58,7 @@ class Hangman
   end
 
   def win?
-    return true if @hidden_word_lines.eql?(@hangman_word)
+    return true if @hidden_word_lines.eql?(@hangman_word) || @guessed_word.eql?(@hangman_word)
   end
 
   def reveal_letter_if_it_exists
@@ -66,6 +66,21 @@ class Hangman
       @hidden_word_lines[index] = letter if letter == @prompt_guess_letter
     end
     @hidden_word_lines
+  end
+
+  def guess_the_word_option
+    puts DisplayableText::GUESS_THE_WORD
+    @case_statement = gets.chomp
+    case @case_statement
+    when 'Y', 'y', 'yes', 'YES'
+      puts DisplayableText::ENTER_THE_WORD
+      @guessed_word = gets.chomp
+    when 'N', 'n', 'no', 'NO'
+      prompt_for_letter
+      display_guessed_letters
+      check_if_prompt_guess_letter_is_in_hangman_word
+      puts reveal_letter_if_it_exists
+    end
   end
 
   def check_if_prompt_guess_letter_is_in_hangman_word
@@ -78,10 +93,7 @@ class Hangman
   end
 
   def each_turn(turn_number)
-    prompt_for_letter
-    display_guessed_letters
-    check_if_prompt_guess_letter_is_in_hangman_word
-    puts reveal_letter_if_it_exists
+    guess_the_word_option
     display_turns_left(turn_number)
   end
 
