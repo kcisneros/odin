@@ -23,6 +23,7 @@
 # program first loads, add in an option that allows you to open one of your saved games,
 # which should jump you exactly back to where you were when you saved. Play on!
 
+require 'yaml'
 require './random_word'
 require './display_text'
 
@@ -38,7 +39,30 @@ class Hangman
   end
 
   def play
-    random_word
+    load_previous_game_prompt
+    game_steps
+  end
+
+  def save_game_file
+    serialized_object = File.new('saved_game.yml', 'w')
+    serialized_object.puts YAML.dump(self)
+    serialized_object.close
+  end
+
+  def load_previous_game_prompt
+    puts DisplayableText::LOAD_GAME_CHOICE
+    response = gets.chomp
+    case response
+    when 'Y', 'y', 'yes', 'YES'
+      puts DisplayableText::LOADED_GAME_CONFIRMATION
+      load_previous_game
+    when 'N', 'n', 'no', 'NO'
+      start_new_game
+    end
+  end
+
+  def start_new_game
+    puts random_word
     turn_number = 0
     puts "#{create_hidden_lines} Word to guess is #{@hangman_word.length} letters long!"
     until game_over?(turn_number)
@@ -47,7 +71,24 @@ class Hangman
     end
   end
 
+  def load_previous_game
+    YAML.load(File.read('saved_game.yml'), permitted_classes: [Hangman, RandomWord])
+  end
+
   private
+
+  def save_the_game?
+    puts DisplayableText::ASK_TO_SAVE_GAME
+    response = gets.chomp
+    case response
+    when 'Y', 'y', 'yes', 'YES'
+      puts DisplayableText::GAME_SAVED_CONFIRMATION
+      save_game_file
+      exit(0)
+    when 'N', 'n', 'no', 'NO'
+      game_steps
+    end
+  end
 
   def display_turns_left(turn_number)
     if turn_number == 11
@@ -70,17 +111,22 @@ class Hangman
 
   def guess_the_word_option
     puts DisplayableText::GUESS_THE_WORD
-    @case_statement = gets.chomp
-    case @case_statement
+    response = gets.chomp
+    case response
     when 'Y', 'y', 'yes', 'YES'
       puts DisplayableText::ENTER_THE_WORD
       @guessed_word = gets.chomp
     when 'N', 'n', 'no', 'NO'
-      prompt_for_letter
-      display_guessed_letters
-      check_if_prompt_guess_letter_is_in_hangman_word
-      puts reveal_letter_if_it_exists
+      game_steps
     end
+  end
+
+  def game_steps
+    display_guessed_letters
+    prompt_for_letter
+    # display_guessed_letters
+    check_if_prompt_guess_letter_is_in_hangman_word
+    puts reveal_letter_if_it_exists
   end
 
   def check_if_prompt_guess_letter_is_in_hangman_word
@@ -93,6 +139,7 @@ class Hangman
   end
 
   def each_turn(turn_number)
+    save_the_game?
     guess_the_word_option
     display_turns_left(turn_number)
   end

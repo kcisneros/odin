@@ -8,6 +8,10 @@ module DisplayableText
   WELCOME_TEXT = "Let's play Hangman!\n\n"
   GUESS_THE_WORD = 'Would you like to guess the word? Y/N '
   ENTER_THE_WORD = 'Please enter your guess: '
+  ASK_TO_SAVE_GAME = 'Do you want to stop and save the game at this point? Y/N '
+  GAME_SAVED_CONFIRMATION = 'Game saved, feel free start playing again at any time. '
+  LOAD_GAME_CHOICE = 'Do you want to load a saved game? Y/N '
+  LOADED_GAME_CONFIRMATION = 'Previous game loaded, good luck! '
 
   def guessed_letters(guessed_letters)
     puts "\n\nSo far you have guessed: #{guessed_letters}"
