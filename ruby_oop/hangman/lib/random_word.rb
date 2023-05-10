@@ -5,6 +5,10 @@ class RandomWord
   # word from the text file in assets/english_words.txt
   attr_accessor :rand_word
 
+  def initialize
+    @rand_word = random_word
+  end
+
   def random_word
     loop do
       @rand_word = File.readlines('../assets/english_words.txt').sample
