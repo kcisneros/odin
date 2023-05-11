@@ -22,9 +22,7 @@ class Hangman
 
   def start_game
     load_game_prompt
-    if @prompt_response == 'Y'
-      load_game
-    end
+    load_game if @prompt_response == 'Y'
     play
   end
 
@@ -35,8 +33,20 @@ class Hangman
 
   private
 
+  def guess_the_word_option
+    puts DisplayableText::GUESS_THE_WORD
+    response = gets.upcase.chomp
+    case response
+    when 'Y'
+      puts DisplayableText::ENTER_THE_WORD
+      @guessed_word = gets.chomp
+    when 'N'
+      puts 'Ok, moving onto the next step'
+    end
+  end
+
   def display_turns_left
-    if @turn_number == 11
+    if @turn_number == 12
       puts lose_text(@secret_word)
     else
       puts turns_left(@turn_number)
@@ -59,6 +69,7 @@ class Hangman
     prompt_for_letter
     display_guessed_letters
     puts reveal_letter_if_it_exists
+    guess_the_word_option unless win?
     display_turns_left
     @turn_number += 1
     save_the_game
