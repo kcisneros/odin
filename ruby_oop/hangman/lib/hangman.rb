@@ -21,17 +21,17 @@ class Hangman
   end
 
   def start_game
-    load_game_prompt
+    load_game_prompt if File.exist?(FILE_NAME)
     load_game if @prompt_response == 'Y'
     play
   end
+
+  private
 
   def play
     puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long!"
     each_turn until game_over?
   end
-
-  private
 
   def guess_the_word_option
     puts DisplayableText::GUESS_THE_WORD
