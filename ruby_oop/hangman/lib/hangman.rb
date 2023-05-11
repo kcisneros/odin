@@ -10,7 +10,8 @@ class Hangman
   include DisplayableText
   include ManageGameState
 
-  attr_reader :guessed_letters, :secret_word, :hidden_word_lines, :turn_number
+  attr_reader :guessed_letters, :secret_word, :hidden_word_lines
+  attr_accessor :turn_number
 
   def initialize
     @secret_word = RandomWord.new.rand_word.chomp
@@ -19,14 +20,17 @@ class Hangman
     @turn_number = 1
   end
 
-  def play
+  def start_game
     load_game_prompt
-    load_game if @prompt_response == 'Y'
-    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long! #{@secret_word}"
-    until game_over?
-      each_turn
-      @turn_number += 1
+    if @prompt_response == 'Y'
+      load_game
     end
+    play
+  end
+
+  def play
+    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long! #{@secret_word}"
+    each_turn until game_over?
   end
 
   private
@@ -51,10 +55,12 @@ class Hangman
   end
 
   def each_turn
+    puts "turn number is: #{@turn_number}"
     prompt_for_letter
     display_guessed_letters
     puts reveal_letter_if_it_exists
     display_turns_left
+    @turn_number += 1
     save_the_game
   end
 
@@ -82,10 +88,14 @@ class Hangman
   end
 
   def create_hidden_lines
-    @hidden_word_lines = '-' * @secret_word.length
+    if defined?(@hidden_word_lines)
+      @hidden_word_lines
+    else
+      @hidden_word_lines = '-' * @secret_word.length
+    end
   end
 end
 
 puts DisplayableText::WELCOME_TEXT
 rand_word = Hangman.new
-rand_word.play
+rand_word.start_game

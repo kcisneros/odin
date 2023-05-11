@@ -16,22 +16,13 @@ module ManageGameState
     end
   end
 
-  def load_game_play
-    puts @hidden_word_lines
-    until game_over?
-      each_turn
-      @turn_number += 1
-    end
-  end
-
   def load_game
     game_state = YAML.load(File.open('saved_game.yml', 'r'), permitted_classes: [Hangman, RandomWord])
-    pp game_state
+    # pp game_state
     @guessed_letters = game_state.guessed_letters
     @secret_word = game_state.secret_word
     @hidden_word_lines = game_state.hidden_word_lines
     @turn_number = game_state.turn_number
-    game_state.load_game_play
   end
 
   def save_game_file
@@ -41,7 +32,7 @@ module ManageGameState
   end
 
   def save_the_game
-    if @turn_number != 11
+    if @turn_number <= 11
       puts DisplayableText::ASK_TO_SAVE_GAME
       response = gets.chomp
       case response
