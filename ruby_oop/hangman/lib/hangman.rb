@@ -27,7 +27,7 @@ class Hangman
   end
 
   def play
-    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long! #{@secret_word}"
+    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long!"
     each_turn until game_over?
   end
 
@@ -46,7 +46,7 @@ class Hangman
   end
 
   def display_turns_left
-    if @turn_number == 12
+    if @turn_number == 11
       puts lose_text(@secret_word)
     else
       puts turns_left(@turn_number)
@@ -57,7 +57,7 @@ class Hangman
     return true if @hidden_word_lines.eql?(@secret_word) || @guessed_word.eql?(@secret_word)
   end
 
-  def reveal_letter_if_it_exists
+  def reveal_letter_if_it_exists_in_secret_string
     @secret_word.chars.each_with_index do |letter, index|
       @hidden_word_lines[index] = letter if letter == @prompt_guess_letter
     end
@@ -65,19 +65,18 @@ class Hangman
   end
 
   def each_turn
-    puts "turn number is: #{@turn_number}"
     prompt_for_letter
     display_guessed_letters
-    puts reveal_letter_if_it_exists
+    puts reveal_letter_if_it_exists_in_secret_string
     guess_the_word_option unless win?
     display_turns_left
     @turn_number += 1
-    save_the_game
+    save_the_game_option
   end
 
   def display_guessed_letters
     @guessed_letters << @prompt_guess_letter
-    puts guessed_letters_text(@guessed_letters)
+    puts all_guessed_letters_so_far(@guessed_letters)
   end
 
   def prompt_for_letter
@@ -90,7 +89,7 @@ class Hangman
 
     @game_over = false
     if win?
-      puts DisplayableText::GAME_OVER_TEXT
+      puts DisplayableText::WINNER_GAME_OVER_TEXT
       @game_over = true
     else
       @game_over = false
