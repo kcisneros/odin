@@ -32,7 +32,7 @@ module ManageGameState
   end
 
   def save_the_game
-    if @turn_number <= 11
+    if @turn_number <= 11 && !win?
       puts DisplayableText::ASK_TO_SAVE_GAME
       response = gets.chomp
       case response
