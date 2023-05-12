@@ -1,9 +1,10 @@
 --- !ruby/object:Hangman
-secret_word: tanzania
+secret_word: chancellor
 guessed_letters:
-- t
-prompt_guess_letter: t
-turn_number: 1
+- c
+- a
+prompt_for_letter: save game
+turn_number: 3
 prompt_response: N
-hidden_word_lines: t-------
+hidden_word_lines: c-a-c-----
 game_over: false

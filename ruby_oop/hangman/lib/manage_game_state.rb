@@ -35,16 +35,12 @@ module ManageGameState
   end
 
   def save_the_game_option
-    if @turn_number <= 11 && !win?
-      puts DisplayableText::ASK_TO_SAVE_GAME
-      response = gets.chomp.upcase
-      case response
-      when 'Y'
+    if @turn_number <= (Hangman::MAX_TURNS - 1) && !win?
+      case @prompt_for_letter
+      when 'save game'
         puts DisplayableText::GAME_SAVED_CONFIRMATION
         save_game_file
         exit(0)
-      else
-        puts 'Ok, not saving the game.'
       end
     end
   end

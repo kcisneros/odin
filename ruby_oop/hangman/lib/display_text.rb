@@ -2,7 +2,7 @@
 
 # module that has the words displayed to the screen
 module DisplayableText
-  PROMPT_FOR_LETTER = 'Enter a letter to solve the secret word: '
+  PROMPT_FOR_LETTER = "Enter a letter to solve the secret word, or type 'save game' to save and quit: "
   WINNER_GAME_OVER_TEXT = 'Game over! You guessed the word 🎉'
   NO_MATCH_TEXT = 'Letter is not in the hangman word!'
   WELCOME_TEXT = "Let's play Hangman!\n\n"
@@ -18,7 +18,7 @@ module DisplayableText
   end
 
   def turns_left(turn_number)
-    "You have #{11 - turn_number} turns left.\n\n"
+    "You have #{(Hangman::MAX_TURNS - 1) - turn_number} turns left.\n\n"
   end
 
   def lose_text(hangman_word)
