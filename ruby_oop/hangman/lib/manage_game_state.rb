@@ -7,6 +7,7 @@ module ManageGameState
   include DisplayableText
 
   FILE_NAME = 'saved_game.yml'
+  SAVE_GAME = 'save game'
 
   def load_game_prompt
     puts DisplayableText::LOAD_GAME_CHOICE
@@ -37,7 +38,7 @@ module ManageGameState
   def save_the_game_option
     if @turn_number <= (Hangman::MAX_TURNS - 1) && !win?
       case @prompt_for_letter
-      when 'save game'
+      when SAVE_GAME
         puts DisplayableText::GAME_SAVED_CONFIRMATION
         save_game_file
         exit(0)

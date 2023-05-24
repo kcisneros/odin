@@ -31,7 +31,7 @@ class Hangman
   private
 
   def play
-    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long! #{@secret_word}"
+    puts "#{create_hidden_lines} Word to guess is #{@secret_word.length} letters long!"
     each_turn until game_over?
   end
 
