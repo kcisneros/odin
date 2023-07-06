@@ -9,6 +9,20 @@ module Enumerable
     self
   end
 
+  def my_select
+    # for each element in the array,
+    # check to see if it is equal to true against the code block
+    # if it is, then add to a new array and return that new array
+    new_arr = []
+    self.my_each do |item|
+      # puts "self item is: #{self[item]}"
+      # puts "yield item is: #{yield(item)}"
+      if yield(item) == true
+        new_arr.push(item)
+      end
+    end
+    new_arr
+  end
 end
 
 # You will first have to define my_each
@@ -36,4 +50,4 @@ end
 a = [1, 1, 2, 3, 5, 8, 13, 21, 34]
 # a.my_each_with_index { |element, idx| p "element is: #{element}. index is: #{idx}" }
 # a.my_each { |element| p "element is: #{element}." }
-
+# a.my_select { |num| p "num is: #{num}."}
