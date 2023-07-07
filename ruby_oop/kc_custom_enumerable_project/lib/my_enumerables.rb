@@ -23,6 +23,18 @@ module Enumerable
     end
     new_arr
   end
+
+  def my_all?
+    bool_val = ''
+    self.my_each do |item|
+      if yield(item) == true
+        bool_val = true
+      else
+        bool_val = false
+      end
+    end
+    bool_val
+  end
 end
 
 # You will first have to define my_each
@@ -51,3 +63,4 @@ a = [1, 1, 2, 3, 5, 8, 13, 21, 34]
 # a.my_each_with_index { |element, idx| p "element is: #{element}. index is: #{idx}" }
 # a.my_each { |element| p "element is: #{element}." }
 # a.my_select { |num| p "num is: #{num}."}
+a.my_all? { |num| num > 0}
